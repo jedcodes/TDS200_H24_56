@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StatusBar } from "react-native";
 import React from "react";
 import ScreenContainer from "@/components/ScreenContainer";
 import {
@@ -11,14 +11,19 @@ import ArtWorkGrid from "@/components/ArtWorkGrid";
 const HomeScreen = () => {
   return (
     <ScreenContainer bgColor="bg-primary-dark">
+      <StatusBar barStyle={"light-content"} />
       <View className="flex w-full flex-row items-center justify-between">
-        <Text className="font-interBold text-2xl">ArtVista</Text>
+        <Text className="font-interBold text-2xl text-secondary">ArtVista</Text>
         <View
           style={{ width: hp(5), height: hp(5) }}
-          className="rounded-full bg-primary-green"
+          className="rounded-full bg-secondary"
         ></View>
       </View>
-      <TextInputField icon={"search"} placeholder="Search for artists ..." />
+      <TextInputField
+        icon={"search"}
+        iconStyle="#A3E635"
+        placeholder="Search for artists ..."
+      />
       <View className="mt-10">
         <ArtWorkGrid />
       </View>

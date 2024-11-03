@@ -1,15 +1,17 @@
 import { View, Text, Image, Pressable, Alert } from "react-native";
 import React, { useState } from "react";
-import ScreenContainer from "@/components/ScreenContainer";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { Link } from "expo-router";
+
+import ScreenContainer from "@/components/ScreenContainer";
 import TextInputField from "@/components/TextInputField";
 import CustomButton from "@/components/CustomButton";
-import { Link } from "expo-router";
 import CustomBackButton from "@/components/CustomBackButton";
-import { supabase } from "@/lib/supabase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 const SignInScreen = () => {
   const [form, setForm] = useState({
@@ -21,11 +23,7 @@ const SignInScreen = () => {
     if (form.email === "" || form.password === "") {
       Alert.alert("Email or password is empty");
     }
-    const { error } = await supabase.auth.signInWithPassword({
-      email: form.email,
-      password: form.password,
-    });
-    if (error) Alert.alert(error.message);
+    await signInWithEmailAndPassword(auth, form.email, form.password);
   };
 
   return (

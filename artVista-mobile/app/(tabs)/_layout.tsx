@@ -20,14 +20,14 @@ const TabIcon = ({
     <View className={`flex items-center justify-center gap-2`}>
       <Icon
         name={icon}
-        color={`${focused ? "#3FCC7C" : "black"}`}
+        color={`${focused ? "#A3E635" : "#848484"}`}
         fontSize={28}
       />
       <Text
         className={`${
           focused
-            ? "font-playfairSM text-primary-green"
-            : "font-playfairRegular"
+            ? "font-interSemiBold text-secondary"
+            : "font-interRegular text-primary-light"
         } text-lg`}
       >
         {name}
@@ -40,13 +40,15 @@ const TabsLayout = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#3FCC7C",
+        tabBarActiveTintColor: "#A3E635",
         tabBarShowLabel: false,
         tabBarInactiveTintColor: "#000",
         tabBarStyle: {
-          backgroundColor: "#fff",
-          elevation: 0.5,
+          backgroundColor: "#1E1E1E",
           height: hp(12),
+          borderTopColor: "#0A0A0A",
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
         },
       }}
     >

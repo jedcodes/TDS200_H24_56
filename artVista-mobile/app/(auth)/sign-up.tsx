@@ -1,15 +1,15 @@
-import { View, Text, Image, Pressable, Alert } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React, { useState } from "react";
-import ScreenContainer from "@/components/ScreenContainer";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { Link } from "expo-router";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { collection, addDoc, doc, setDoc } from "firebase/firestore";
+
 import TextInputField from "@/components/TextInputField";
 import CustomButton from "@/components/CustomButton";
-import { Link } from "expo-router";
 import CustomBackButton from "@/components/CustomBackButton";
-import { supabase } from "@/lib/supabase";
+import ScreenContainer from "@/components/ScreenContainer";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "@/lib/firebase";
 
 const SignUpScreen = () => {
   const [form, setForm] = useState({
@@ -22,24 +22,17 @@ const SignUpScreen = () => {
     if (form.email === "" || form.password === "" || form.username === "") {
       Alert.alert("Username, email or password is empty");
     }
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
-      email: form.email,
-      password: form.password,
-      options: {
-        data: {
-          username: form.username,
-        },
-      },
+    const authCredential = await createUserWithEmailAndPassword(
+      auth,
+      form.email,
+      form.password
+    );
+    console.log(authCredential);
+    const docRef = doc(db, "artists", authCredential.user.uid);
+
+    await setDoc(docRef, {
+      username: form.username,
     });
-
-    if (error) Alert.alert(error.message);
-    if (!session)
-      Alert.alert("Please check your inbox for email verification!");
-
-    console.log(session);
   };
 
   return (

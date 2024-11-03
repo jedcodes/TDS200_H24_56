@@ -1,3 +1,5 @@
+import { auth } from "@/lib/firebase";
+import { onAuthStateChanged, User as Artist } from "firebase/auth";
 import {
   createContext,
   PropsWithChildren,
@@ -6,42 +8,45 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Session, User as Artist } from "@supabase/supabase-js";
-import { supabase } from "@/lib/supabase";
 
 type AuthContextType = {
   artist: null | Artist;
-  session: null | Session;
-  initialized: boolean;
+  isAuthenticated: boolean;
+  message: string;
   signOut?: () => void;
 };
 
 const AuthContext = createContext<Partial<AuthContextType>>({});
 
-export const AuthProvider = ({ children }: PropsWithChildren) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [artist, setArtist] = useState<null | Artist>(null);
-  const [session, setSession] = useState<null | Session>(null);
-  const [initialized, setInitialized] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        if (session) {
-          setSession(session);
-          setArtist(session.user);
-          setInitialized(true);
-        }
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setArtist(user);
+        setIsAuthenticated(true);
+        setMessage("You are now signed in");
+      } else {
+        setArtist(null);
+        setIsAuthenticated(false);
       }
-    );
-    return () => data.subscription.unsubscribe();
+    });
+
+    // Rydder opp etter seg funksjonen
+    return () => unsubscribe();
   }, []);
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    await auth.signOut();
+    setIsAuthenticated(false);
+    setMessage("You are now signed out");
   };
 
   return (
-    <AuthContext.Provider value={{ artist, session, initialized, signOut }}>
+    <AuthContext.Provider value={{ artist, isAuthenticated, signOut }}>
       {children}
     </AuthContext.Provider>
   );

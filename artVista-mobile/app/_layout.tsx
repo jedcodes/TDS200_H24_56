@@ -1,4 +1,4 @@
-import { Stack, useRouter, useSegments } from "expo-router";
+import { Slot, Stack, useRouter, useSegments } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import "../global.css";
@@ -7,7 +7,7 @@ import { AuthProvider, useAuth } from "@/context/authContext";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+function InitialLayout() {
   const [fontsLoaded] = useFonts({
     "Inter_18pt-Thin": require("@/assets/fonts/Inter_18pt-Thin.ttf"),
     "Inter_18pt-Regular": require("@/assets/fonts/Inter_18pt-Regular.ttf"),
@@ -17,7 +17,7 @@ export default function RootLayout() {
     "Inter_18pt-ExtraBold": require("@/assets/fonts/Inter_18pt-ExtraBold.ttf"),
   });
 
-  const { initialized, session } = useAuth();
+  const { isAuthenticated } = useAuth();
   const segments = useSegments();
   const router = useRouter();
 
@@ -28,24 +28,26 @@ export default function RootLayout() {
   }, [fontsLoaded]);
 
   useEffect(() => {
-    if (!initialized) return;
+    if (!isAuthenticated) return;
 
     const inApp = segments[0] === "(tabs)";
 
-    if (session && !inApp) {
+    if (isAuthenticated && !inApp) {
       router.replace("/(tabs)/home");
-    } else if (!session) {
+    } else if (!isAuthenticated) {
       router.replace("/(auth)/sign-in");
     }
-  }, [initialized, session]);
+  }, [isAuthenticated]);
 
+  return <Slot />;
+}
+
+const RootLayout = () => {
   return (
     <AuthProvider>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
+      <InitialLayout />
     </AuthProvider>
   );
-}
+};
+
+export default RootLayout;
