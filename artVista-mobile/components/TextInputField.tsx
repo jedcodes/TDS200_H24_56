@@ -26,14 +26,15 @@ const TextInputField = ({
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <View className="my-2 w-full mx-4">
-        <Text className={`text-lg font-playfairSB ${labelStyle}`}>{label}</Text>
+      <View className="my-5 w-full">
         <View
-          className={`flex flex-row items-center border rounded-full border-neutral-500 p-4 active:border-primary-green ${containerStyle}`}
+          className={`flex flex-row items-center border rounded-2xl bg-primary border-neutral-500 p-4 active:border-primary-green ${containerStyle}`}
         >
-          {icon && <Icon name={icon} />}
+          {icon && <Icon name={icon} color={iconStyle} />}
           <TextInput
-            className={`w-full font-playfairRegular ml-2  ${inputStyle}`}
+            autoCapitalize="none"
+            placeholderTextColor={"#A0A0A0"}
+            className={`w-full font-interRegular text-neutral-100 ml-2  ${inputStyle}`}
             secureTextEntry={secureTextEntry}
             {...props}
           />

@@ -18,13 +18,17 @@ const TabIcon = ({
 }) => {
   return (
     <View className={`flex items-center justify-center gap-2`}>
-      <Icon name={icon} color={`${focused && "#3FCC7C"}`} />
+      <Icon
+        name={icon}
+        color={`${focused ? "#3FCC7C" : "black"}`}
+        fontSize={28}
+      />
       <Text
         className={`${
           focused
             ? "font-playfairSM text-primary-green"
             : "font-playfairRegular"
-        } text-sm`}
+        } text-lg`}
       >
         {name}
       </Text>
@@ -42,9 +46,7 @@ const TabsLayout = () => {
         tabBarStyle: {
           backgroundColor: "#fff",
           elevation: 0.5,
-          height: hp(10),
-          margin: wp(10),
-          borderRadius: 15,
+          height: hp(12),
         },
       }}
     >

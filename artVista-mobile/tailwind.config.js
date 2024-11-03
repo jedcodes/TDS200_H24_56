@@ -7,14 +7,21 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          green: "#3FCC7C",
+          DEFAULT: "#1E1E1E",
+          light: "#848484",
+          dark: "#0A0A0A",
+        },
+        secondary: {
+          DEFAULT: "#A3E635",
         },
       },
       fontFamily: {
-        playfairMD: ["PlayfairDisplay-Medium", "sans-serif"],
-        playfairRegular: ["PlayfairDisplay-Regular", "sans-serif"],
-        playfairSM: ["PlayfairDisplay-SemiBold", "sans-serif"],
-        playfairEB: ["PlayfairDisplay-ExtraBold", "sans-serif"],
+        interRegular: ["Inter_18pt-Regular", "sans-serif"],
+        interMedium: ["Inter_18pt-Medium", "sans-serif"],
+        interBold: ["Inter_18pt-Bold", "sans-serif"],
+        interThin: ["Inter_18pt-Thin", "sans-serif"],
+        interExtraBold: ["Inter_18pt-ExtraBold", "sans-serif"],
+        interSemiBold: ["Inter_18pt-SemiBold", "sans-serif"],
       },
     },
   },

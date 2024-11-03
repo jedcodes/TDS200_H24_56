@@ -1,60 +1,76 @@
-import { View, Text } from "react-native";
-import React from "react";
-import CustomButton from "@/components/CustomButton";
-import TextInputField from "@/components/TextInputField";
-import { Link } from "expo-router";
-
+import { View, Text, Image, Pressable, Alert } from "react-native";
+import React, { useState } from "react";
+import ScreenContainer from "@/components/ScreenContainer";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import ScreenContainer from "@/components/ScreenContainer";
+import TextInputField from "@/components/TextInputField";
+import CustomButton from "@/components/CustomButton";
+import { Link } from "expo-router";
+import CustomBackButton from "@/components/CustomBackButton";
+import { supabase } from "@/lib/supabase";
 
 const SignInScreen = () => {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleSignIn = async () => {
+    if (form.email === "" || form.password === "") {
+      Alert.alert("Email or password is empty");
+    }
+    const { error } = await supabase.auth.signInWithPassword({
+      email: form.email,
+      password: form.password,
+    });
+    if (error) Alert.alert(error.message);
+  };
+
   return (
-    <ScreenContainer bgColor="bg-white">
+    <ScreenContainer bgColor="bg-primary-dark">
+      <CustomBackButton />
       <View className="my-10">
-        <Text style={{ fontSize: hp(4) }} className="font-playfairEB">
-          Welcome Back
+        <Text
+          style={{ fontSize: hp(4) }}
+          className="font-interExtraBold tracking-wider text-white"
+        >
+          ArtVista
         </Text>
-        <Text className="font-playfairSM text-2xl tracking-wider">Sign Up</Text>
+        <Text className="font-interMedium text-2xl tracking-wider text-neutral-200">
+          Sign in to ArtVista
+        </Text>
       </View>
       <View>
         <TextInputField
+          iconStyle="#A3E635"
           label="Email"
           icon={"mail"}
           placeholder="Enter your email"
+          onChangeText={(text) => setForm({ ...form, email: text })}
         />
         <TextInputField
+          iconStyle="#A3E635"
           label="Password"
           icon={"lock"}
           placeholder="Enter your password"
           secureTextEntry={true}
+          onChangeText={(text) => setForm({ ...form, password: text })}
         />
-        <CustomButton title="Sign up" />
+        <CustomButton
+          title="Sign up"
+          onPress={() => handleSignIn()}
+          bgVariant="secondary"
+          className="mt-5"
+        />
       </View>
       <View className="w-full flex flex-row justify-center items-center mb-5">
-        <Link href="/(auth)/sign-up">
+        <Link href="/(auth)/sign-in" className="text-white">
           Dont already have an account?
-          <Text className="ml-2 text-primary-green">Sign up</Text>
+          <Text className="ml-2 text-secondary">Register</Text>
         </Link>
       </View>
-      <CustomButton
-        title="Login with Apple"
-        bgVariant="secondary"
-        textVariant="secondary"
-        btnRound="rounded-lg"
-        IconLeft={"apple"}
-        iconColor="white"
-      />
-      <CustomButton
-        title="Login with Google"
-        btnRound="rounded-lg"
-        bgVariant="secondary"
-        textVariant="secondary"
-        IconLeft={"google"}
-        iconColor="white"
-      />
     </ScreenContainer>
   );
 };

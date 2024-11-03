@@ -2,7 +2,7 @@ import { PressableProps, TextInputProps } from "react-native";
 
 export type ScreenContainerProps = {
   children: ReactNode;
-  bgColor: string;
+  bgColor?: string;
 };
 
 declare interface ButtonProps extends PressableProps {
@@ -17,7 +17,7 @@ declare interface ButtonProps extends PressableProps {
 }
 
 declare interface InputInputFieldProps extends TextInputProps {
-  label: string;
+  label?: string;
   icon?: any;
   secureTextEntry?: boolean;
   labelStyle?: string;

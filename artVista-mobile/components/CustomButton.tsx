@@ -6,9 +6,9 @@ import Icon from "@/assets/icons";
 const getBgVariantStyle = (variant: ButtonProps["bgVariant"]) => {
   switch (variant) {
     case "primary":
-      return "bg-primary-green";
+      return "bg-primary";
     case "secondary":
-      return "bg-transparent border border-primary-green";
+      return "bg-secondary";
     case "danger":
       return "bg-red-500";
     case "success":
@@ -21,7 +21,7 @@ const getBgVariantStyle = (variant: ButtonProps["bgVariant"]) => {
 const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
   switch (variant) {
     case "primary":
-      return "text-white";
+      return "text-primary";
     case "secondary":
       return "text-black";
     case "danger":
@@ -49,13 +49,13 @@ const CustomButton = ({
     <Pressable
       onPress={onPress}
       {...props}
-      className={`flex p-5 mb-4 w-full flex-row items-center justify-center shadow-md shadow-neutral-400 ${btnRound} ${getBgVariantStyle(
+      className={`flex p-5 mb-4 w-full flex-row items-center justify-center ${btnRound} ${getBgVariantStyle(
         bgVariant
       )} ${className}`}
     >
       {IconLeft && <Icon name={IconLeft} color={iconColor} />}
       <Text
-        className={`text-xl font-playfairSM ${getTextVariantStyle(
+        className={`text-lg font-interMedium ${getTextVariantStyle(
           textVariant
         )}`}
       >
