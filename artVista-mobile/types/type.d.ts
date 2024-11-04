@@ -1,4 +1,5 @@
 import { PressableProps, TextInputProps } from "react-native";
+import { LocationObjectCoords } from "expo-location";
 
 export type ScreenContainerProps = {
   children: ReactNode;
@@ -25,4 +26,28 @@ declare interface InputInputFieldProps extends TextInputProps {
   inputStyle?: string;
   iconStyle?: string;
   className?: string;
+}
+
+declare interface ArtWork {
+  id: string;
+  title: string;
+  description: string;
+  hastags: string[];
+  category: string;
+  likes: string[];
+  comments: string[];
+  author: string;
+  imageUrl: string;
+  location: LocationObjectCoords | null;
+}
+
+declare interface Comment {
+  artistId: string;
+  artistName: string;
+  comment: string;
+}
+
+declare interface CommentObject {
+  id: string;
+  comment: Comment;
 }

@@ -44,8 +44,14 @@ const ProfileScreen = () => {
               Favourites
             </Text>
           </View>
-          <View></View>
-          <View></View>
+          <View className="p-4 items-center ">
+            <Text className="text-xl font-interMedium text-neutral-100">
+              100
+            </Text>
+            <Text className="text-xl font-interMedium text-neutral-500">
+              Art Works
+            </Text>
+          </View>
         </View>
       </View>
     </View>

@@ -2,7 +2,7 @@ import { View, Text, Alert } from "react-native";
 import React, { useState } from "react";
 import { Link } from "expo-router";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import { collection, addDoc, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 import TextInputField from "@/components/TextInputField";
 import CustomButton from "@/components/CustomButton";
@@ -27,7 +27,8 @@ const SignUpScreen = () => {
       form.email,
       form.password
     );
-    console.log(authCredential);
+
+    // Legger til bruker i databasen
     const docRef = doc(db, "artists", authCredential.user.uid);
 
     await setDoc(docRef, {

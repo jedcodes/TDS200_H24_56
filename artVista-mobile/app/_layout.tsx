@@ -17,9 +17,9 @@ function InitialLayout() {
     "Inter_18pt-ExtraBold": require("@/assets/fonts/Inter_18pt-ExtraBold.ttf"),
   });
 
-  const { isAuthenticated } = useAuth();
-  const segments = useSegments();
-  const router = useRouter();
+  // const { isAuthenticated } = useAuth();
+  // const segments = useSegments();
+  // const router = useRouter();
 
   useEffect(() => {
     if (fontsLoaded) {
@@ -27,17 +27,17 @@ function InitialLayout() {
     }
   }, [fontsLoaded]);
 
-  useEffect(() => {
-    if (!isAuthenticated) return;
+  // useEffect(() => {
+  //   if (!isAuthenticated) return;
 
-    const inApp = segments[0] === "(tabs)";
+  //   const inApp = segments[0] === "(tabs)";
 
-    if (isAuthenticated && !inApp) {
-      router.replace("/(tabs)/home");
-    } else if (!isAuthenticated) {
-      router.replace("/(auth)/sign-in");
-    }
-  }, [isAuthenticated]);
+  //   if (isAuthenticated && !inApp) {
+  //     router.replace("/(tabs)/home");
+  //   } else if (!isAuthenticated) {
+  //     router.replace("/(auth)/sign-in");
+  //   }
+  // }, [isAuthenticated]);
 
   return <Slot />;
 }

@@ -35,20 +35,20 @@ export default function Index() {
         >
           <Text
             style={{ fontSize: hp(5) }}
-            className="text-white font-interBold"
+            className="text-white font-interExtraBold tracking-wider"
           >
             ArtVista
           </Text>
           <View>
-            <Text className="text-left text-neutral-200 text-lg">
+            <Text className="text-left text-neutral-200 text-xl">
               Follw your favorite artists, and view their latest art piece or
               connect to new artists and share art piece with your friends.
             </Text>
           </View>
           <View className="w-full">
             <CustomButton
-              onPress={() => router.push("/(auth)/sign-up")}
-              title="Start To Explore"
+              title="Start Exploring"
+              onPress={() => router.push("/(tabs)/home")}
               bgVariant="secondary"
               textVariant="primary"
             />

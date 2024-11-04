@@ -29,9 +29,9 @@ export const auth = initializeAuth(app, {
 
 export const storage = getStorage(app);
 export const db = getFirestore(app);
-export const storageRef = (path: any) => ref(storage, path);
+export const storageRef = (path: string) => ref(storage, path);
 
-// export const getDownloadURL = async (path: any) => {
-//   const url = await getDownloadURL(ref(storage, path));
-//   return url;
-// }
+export const fetchDownloadURL = async (path: string): Promise<string> => {
+  const url = await getDownloadURL(ref(storage, path));
+  return url;
+};
