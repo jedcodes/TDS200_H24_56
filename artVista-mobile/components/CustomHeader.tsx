@@ -6,10 +6,14 @@ const CustomHeader = ({
   title,
   iconOneName,
   iconTwoName,
+  favouriteRoute,
+  newPostRoute,
 }: {
   title: string;
   iconOneName: any;
   iconTwoName: any;
+  favouriteRoute?: () => void;
+  newPostRoute: () => void;
 }) => {
   return (
     <View className="w-full items-center justify-between flex-row">
@@ -17,10 +21,10 @@ const CustomHeader = ({
         {title}
       </Text>
       <View className="flex-row gap-2">
-        <Pressable>
+        <Pressable onPress={newPostRoute}>
           <Icon name={iconOneName} color={"#A3E635"} />
         </Pressable>
-        <Pressable>
+        <Pressable onPress={favouriteRoute}>
           <Icon name={iconTwoName} color={"#A3E635"} />
         </Pressable>
       </View>

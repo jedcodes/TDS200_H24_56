@@ -11,6 +11,7 @@ import LockPasswordIcon from "./Password";
 import Bookmark02Icon from "./Saved";
 import Search01Icon from "./Search";
 import UserCircleIcon from "./User";
+import Image02Icon from "./Media";
 
 const icons = {
   user: UserCircleIcon,
@@ -25,6 +26,7 @@ const icons = {
   arrowBack: ArrowLeft01Icon,
   chat: BubbleChatIcon,
   favourite: FavouriteIcon,
+  media: Image02Icon,
 };
 
 type IconProps = {

@@ -11,8 +11,10 @@ import { SAMPLE_DATA } from "@/constants/DATA";
 import CustomHeader from "@/components/CustomHeader";
 import EmptyList from "@/components/EmptyList";
 import ArtWordCard from "@/components/ArtWordCard";
+import { useRouter } from "expo-router";
 
 const HomeScreen = () => {
+  const router = useRouter();
   return (
     <ScreenContainer bgColor="bg-primary-dark">
       <FlatList
@@ -22,6 +24,7 @@ const HomeScreen = () => {
         ListHeaderComponent={() => (
           <View className="my-6 space-y-6">
             <CustomHeader
+              newPostRoute={() => router.push("/(tabs)/newPost")}
               title="ArtVista"
               iconOneName="add"
               iconTwoName={"favourite"}

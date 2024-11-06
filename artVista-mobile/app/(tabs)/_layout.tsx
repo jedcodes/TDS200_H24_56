@@ -14,7 +14,7 @@ const TabIcon = ({
 }: {
   focused: boolean;
   icon: any;
-  name: string;
+  name?: string;
 }) => {
   return (
     <View className={`flex items-center justify-center gap-2`}>
@@ -56,17 +56,24 @@ const TabsLayout = () => {
           title: "Home",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="home" name="Home" focused={focused} />
+            <TabIcon icon="home" focused={focused} />
           ),
         }}
       />
       <Tabs.Screen
-        name="saved"
+        name="newPost"
         options={{
-          title: "Saved",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <TabIcon icon="add" focused={focused} />,
+        }}
+      />
+      <Tabs.Screen
+        name="favorites"
+        options={{
+          title: "Favorites",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="saved" name="Saved" focused={focused} />
+            <TabIcon icon="favourite" focused={focused} />
           ),
         }}
       />
@@ -76,7 +83,7 @@ const TabsLayout = () => {
           title: "Profile",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="user" name="Profile" focused={focused} />
+            <TabIcon icon="user" focused={focused} />
           ),
         }}
       />
