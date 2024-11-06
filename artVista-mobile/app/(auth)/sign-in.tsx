@@ -4,7 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
 import ScreenContainer from "@/components/ScreenContainer";
 import TextInputField from "@/components/TextInputField";
@@ -14,6 +14,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 const SignInScreen = () => {
+  const router = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -28,7 +29,7 @@ const SignInScreen = () => {
 
   return (
     <ScreenContainer bgColor="bg-primary-dark">
-      <CustomBackButton />
+      <CustomBackButton onPress={() => router.back()} />
       <View className="my-10">
         <Text
           style={{ fontSize: hp(4) }}

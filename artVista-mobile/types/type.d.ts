@@ -38,6 +38,7 @@ declare interface ArtWork {
   comments: string[];
   author: string;
   imageUrl: string;
+  fileType: string;
   location: LocationObjectCoords | null;
 }
 

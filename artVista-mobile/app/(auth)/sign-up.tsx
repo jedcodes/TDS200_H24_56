@@ -1,6 +1,6 @@
 import { View, Text, Alert } from "react-native";
 import React, { useState } from "react";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -12,6 +12,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 
 const SignUpScreen = () => {
+  const router = useRouter();
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -38,7 +39,7 @@ const SignUpScreen = () => {
 
   return (
     <ScreenContainer bgColor="bg-primary-dark">
-      <CustomBackButton />
+      <CustomBackButton onPress={() => router.back()} />
       <View className="my-10">
         <Text
           style={{ fontSize: hp(4) }}

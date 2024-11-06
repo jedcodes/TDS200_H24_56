@@ -2,7 +2,6 @@ import { auth } from "@/lib/firebase";
 import { onAuthStateChanged, User as Artist } from "firebase/auth";
 import {
   createContext,
-  PropsWithChildren,
   ReactNode,
   useContext,
   useEffect,
@@ -13,6 +12,7 @@ type AuthContextType = {
   artist: null | Artist;
   isAuthenticated: boolean;
   message: string;
+  loading: boolean;
   signOut?: () => void;
 };
 
@@ -21,14 +21,17 @@ const AuthContext = createContext<Partial<AuthContextType>>({});
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [artist, setArtist] = useState<null | Artist>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setLoading(true);
       if (user) {
         setArtist(user);
         setIsAuthenticated(true);
         setMessage("You are now signed in");
+        setLoading(false);
       } else {
         setArtist(null);
         setIsAuthenticated(false);
@@ -40,13 +43,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signOut = async () => {
+    setLoading(true);
     await auth.signOut();
     setIsAuthenticated(false);
     setMessage("You are now signed out");
+    setLoading(false);
   };
 
   return (
-    <AuthContext.Provider value={{ artist, isAuthenticated, signOut }}>
+    <AuthContext.Provider value={{ artist, isAuthenticated, loading, signOut }}>
       {children}
     </AuthContext.Provider>
   );

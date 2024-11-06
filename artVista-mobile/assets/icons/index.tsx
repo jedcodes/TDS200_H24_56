@@ -12,6 +12,8 @@ import Bookmark02Icon from "./Saved";
 import Search01Icon from "./Search";
 import UserCircleIcon from "./User";
 import Image02Icon from "./Media";
+import FolderLibraryIcon from "./Library";
+import RepeatIcon from "./Repeat";
 
 const icons = {
   user: UserCircleIcon,
@@ -27,6 +29,8 @@ const icons = {
   chat: BubbleChatIcon,
   favourite: FavouriteIcon,
   media: Image02Icon,
+  library: FolderLibraryIcon,
+  repeat: RepeatIcon,
 };
 
 type IconProps = {

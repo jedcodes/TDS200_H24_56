@@ -27,10 +27,10 @@ export const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 });
 
-export const storage = getStorage(app);
 export const db = getFirestore(app);
-export const storageRef = (path: string) => ref(storage, path);
 
+export const storage = getStorage(app);
+export const storageRef = (path: string) => ref(storage, path);
 export const fetchDownloadURL = async (path: string): Promise<string> => {
   const url = await getDownloadURL(ref(storage, path));
   return url;
