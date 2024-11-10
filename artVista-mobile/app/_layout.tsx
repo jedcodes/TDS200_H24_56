@@ -17,29 +17,24 @@ function InitialLayout() {
     "Inter_18pt-ExtraBold": require("@/assets/fonts/Inter_18pt-ExtraBold.ttf"),
   });
 
-  // const { isAuthenticated } = useAuth();
-  // const segments = useSegments();
-  // const router = useRouter();
-
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
 
-  // useEffect(() => {
-  //   if (!isAuthenticated) return;
-
-  //   const inApp = segments[0] === "(tabs)";
-
-  //   if (isAuthenticated && !inApp) {
-  //     router.replace("/(tabs)/home");
-  //   } else if (!isAuthenticated) {
-  //     router.replace("/(auth)/sign-in");
-  //   }
-  // }, [isAuthenticated]);
-
-  return <Slot />;
+  return (
+    <Stack>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack.Screen name="(camera)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="(modal)"
+        options={{ headerShown: false, presentation: "modal" }}
+      />
+    </Stack>
+  );
 }
 
 const RootLayout = () => {

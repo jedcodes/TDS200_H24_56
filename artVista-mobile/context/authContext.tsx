@@ -11,7 +11,6 @@ import {
 type AuthContextType = {
   artist: null | Artist;
   isAuthenticated: boolean;
-  message: string;
   loading: boolean;
   signOut?: () => void;
 };
@@ -22,7 +21,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [artist, setArtist] = useState<null | Artist>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -30,7 +28,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (user) {
         setArtist(user);
         setIsAuthenticated(true);
-        setMessage("You are now signed in");
         setLoading(false);
       } else {
         setArtist(null);
@@ -46,7 +43,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(true);
     await auth.signOut();
     setIsAuthenticated(false);
-    setMessage("You are now signed out");
     setLoading(false);
   };
 

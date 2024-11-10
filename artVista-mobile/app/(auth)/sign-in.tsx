@@ -1,4 +1,4 @@
-import { View, Text, Image, Pressable, Alert } from "react-native";
+import { View, Text, Image, Pressable, Alert, ScrollView } from "react-native";
 import React, { useState } from "react";
 import {
   widthPercentageToDP as wp,
@@ -12,45 +12,62 @@ import CustomButton from "@/components/CustomButton";
 import CustomBackButton from "@/components/CustomBackButton";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const SignInScreen = () => {
+  const { top } = useSafeAreaInsets();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
   const handleSignIn = async () => {
+    setIsLoading(true);
     if (form.email === "" || form.password === "") {
       Alert.alert("Email or password is empty");
     }
-    await signInWithEmailAndPassword(auth, form.email, form.password);
+    const respone = await signInWithEmailAndPassword(
+      auth,
+      form.email,
+      form.password
+    );
+    console.log(respone);
+    router.replace("/(tabs)/home");
+    setIsLoading(false);
   };
 
   return (
-    <ScreenContainer bgColor="bg-primary-dark">
+    <ScrollView
+      style={{ paddingTop: top, paddingHorizontal: 6 }}
+      className="flex-1 bg-primary"
+    >
       <CustomBackButton onPress={() => router.back()} />
       <View className="my-10">
         <Text
           style={{ fontSize: hp(4) }}
-          className="font-interExtraBold tracking-wider text-white"
+          className="font-interExtraBold tracking-wider"
         >
           ArtVista
         </Text>
-        <Text className="font-interMedium text-2xl tracking-wider text-neutral-200">
-          Sign in to ArtVista
+        <Text
+          style={{ fontSize: hp(3) }}
+          className="font-interSemiBold  tracking-wider "
+        >
+          Welcome Back
         </Text>
       </View>
       <View>
         <TextInputField
-          iconStyle="#A3E635"
+          iconStyle="#25C0B7"
           label="Email"
           icon={"mail"}
           placeholder="Enter your email"
           onChangeText={(text) => setForm({ ...form, email: text })}
         />
         <TextInputField
-          iconStyle="#A3E635"
+          iconStyle="#25C0B7"
           label="Password"
           icon={"lock"}
           placeholder="Enter your password"
@@ -58,19 +75,20 @@ const SignInScreen = () => {
           onChangeText={(text) => setForm({ ...form, password: text })}
         />
         <CustomButton
-          title="Sign up"
+          isLoading={isLoading}
+          title="Login"
           onPress={() => handleSignIn()}
-          bgVariant="secondary"
+          bgVariant="primary"
           className="mt-5"
         />
       </View>
       <View className="w-full flex flex-row justify-center items-center mb-5">
-        <Link href="/(auth)/sign-in" className="text-white">
+        <Link href="/(auth)/sign-up">
           Dont already have an account?
           <Text className="ml-2 text-secondary">Register</Text>
         </Link>
       </View>
-    </ScreenContainer>
+    </ScrollView>
   );
 };
 

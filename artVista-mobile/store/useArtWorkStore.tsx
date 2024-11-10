@@ -1,32 +1,19 @@
+import { ArtworkAction, ArtworkState } from "@/types/type";
 import { create } from "zustand";
 
-type State = {
-  imageUrl: string | null;
-  description: string;
-  category: string;
-  hashtags: string;
-  progress: number;
-};
-
-type Action = {
-  updateImageUrl: (imageUrl: State["imageUrl"]) => void;
-  updateDescription: (description: State["description"]) => void;
-  updateCategory: (category: State["category"]) => void;
-  updateHashtags: (hashtags: State["hashtags"]) => void;
-  updateProgress: (progress: State["progress"]) => void;
-};
-
-const useArtWorkStore = create<State & Action>((set) => ({
+const useArtWorkStore = create<ArtworkState & ArtworkAction>((set) => ({
+  title: "",
   imageUrl: "",
   description: "",
   category: "",
   hashtags: "",
-  progress: 0,
+  isUploading: false,
+  updateTitle: (title) => set({ title }),
   updateImageUrl: (imageUrl) => set({ imageUrl }),
   updateDescription: (description) => set({ description }),
   updateCategory: (category) => set({ category }),
   updateHashtags: (hashtags) => set({ hashtags }),
-  updateProgress: (progress) => set({ progress }),
+  updateIsUploading: (isUploading) => set({ isUploading }),
 }));
 
 export default useArtWorkStore;

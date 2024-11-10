@@ -7,12 +7,11 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#1E1E1E",
-          light: "#848484",
-          dark: "#0A0A0A",
+          DEFAULT: "#FCFCFC",
+          dark: "#21302F",
         },
         secondary: {
-          DEFAULT: "#A3E635",
+          DEFAULT: "#25C0B7",
         },
       },
       fontFamily: {

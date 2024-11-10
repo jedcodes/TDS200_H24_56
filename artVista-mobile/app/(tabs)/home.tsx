@@ -1,24 +1,41 @@
-import { View, Text, StatusBar, FlatList } from "react-native";
-import React from "react";
+import { View, Text, FlatList, StatusBar } from "react-native";
+import React, { useEffect, useState } from "react";
 import ScreenContainer from "@/components/ScreenContainer";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
 import TextInputField from "@/components/TextInputField";
-import ArtWorkGrid from "@/components/ArtWorkGrid";
-import { SAMPLE_DATA } from "@/constants/DATA";
 import CustomHeader from "@/components/CustomHeader";
 import EmptyList from "@/components/EmptyList";
 import ArtWordCard from "@/components/ArtWordCard";
 import { useRouter } from "expo-router";
+import { ArtWork } from "@/types/type";
+import { collection, doc, onSnapshot } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { getAllArtworks } from "@/api/uploadArtWorkAPI";
 
 const HomeScreen = () => {
   const router = useRouter();
+  const [artworks, setArtworks] = useState<ArtWork[]>([]);
+
+  const fetchArtworks = async () => {
+    const unsub = onSnapshot(doc(db, "artworks"), (doc) => {
+      if (doc.exists()) {
+        setArtworks(doc.data().artworks);
+      }
+    });
+    // const response = await getAllArtworks();
+    // setArtworks(response);
+
+    return () => unsub();
+  };
+
+  useEffect(() => {
+    fetchArtworks();
+  }, []);
+
   return (
-    <ScreenContainer bgColor="bg-primary-dark">
+    <ScreenContainer bgColor="bg-primary">
+      <StatusBar barStyle="dark-content" />
       <FlatList
-        data={SAMPLE_DATA}
+        data={artworks}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <ArtWordCard item={item} />}
         ListHeaderComponent={() => (
@@ -35,7 +52,7 @@ const HomeScreen = () => {
               iconStyle="#A3E635"
             />
             <View className="w-full flex-1 pt-5 pb-8">
-              <Text className="text-xl font-interRegular text-gray-100 mb-3">
+              <Text className="text-xl font-interRegular mb-3">
                 Highest Voted Art works
               </Text>
             </View>

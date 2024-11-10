@@ -15,7 +15,7 @@ export default function Index() {
     <View className="flex-1 justify-end bg-black">
       <StatusBar barStyle={"light-content"} />
       <Image
-        source={require("@/assets/images/welcome2.png")}
+        source={require("@/assets/images/welcome1.png")}
         className="absolute w-full h-full"
       />
       <LinearGradient
@@ -23,7 +23,12 @@ export default function Index() {
           width: wp(100),
           height: hp(70),
         }}
-        colors={["transparent", "#18181b"]}
+        colors={[
+          "rgba(255,255,255,0)",
+          "rgba(255,255,255,0.5)",
+          "#fff",
+          "#fff",
+        ]}
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 0.8 }}
         className="justify-end"
@@ -35,12 +40,12 @@ export default function Index() {
         >
           <Text
             style={{ fontSize: hp(5) }}
-            className="text-white font-interExtraBold tracking-wider"
+            className=" font-interExtraBold tracking-wider"
           >
             ArtVista
           </Text>
           <View>
-            <Text className="text-left text-neutral-200 text-xl">
+            <Text className="text-left  text-xl">
               Follw your favorite artists, and view their latest art piece or
               connect to new artists and share art piece with your friends.
             </Text>
@@ -49,7 +54,7 @@ export default function Index() {
             <CustomButton
               title="Start Exploring"
               onPress={() => router.push("/(tabs)/home")}
-              bgVariant="secondary"
+              bgVariant="primary"
               textVariant="primary"
             />
           </View>

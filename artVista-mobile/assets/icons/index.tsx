@@ -14,6 +14,8 @@ import UserCircleIcon from "./User";
 import Image02Icon from "./Media";
 import FolderLibraryIcon from "./Library";
 import RepeatIcon from "./Repeat";
+import Navigation03Icon from "./Send";
+import Logout01Icon from "./Logout";
 
 const icons = {
   user: UserCircleIcon,
@@ -31,6 +33,8 @@ const icons = {
   media: Image02Icon,
   library: FolderLibraryIcon,
   repeat: RepeatIcon,
+  send: Navigation03Icon,
+  logout: Logout01Icon,
 };
 
 type IconProps = {

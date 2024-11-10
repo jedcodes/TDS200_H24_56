@@ -4,6 +4,7 @@ import { Image } from "expo-image";
 import { ArtWork } from "@/types/type";
 import CustomAvatar from "./CustomAvatar";
 import Icon from "@/assets/icons";
+import { router } from "expo-router";
 
 const ArtWordCard = ({ item }: { item?: ArtWork }) => {
   return (
@@ -12,10 +13,8 @@ const ArtWordCard = ({ item }: { item?: ArtWork }) => {
         <View className="flex flex-row gap-2 items-center">
           <CustomAvatar size="medium" />
           <View className="flex justify-center ml-3 gap-y-1">
-            <Text className="text-lg font-interBold text-gray-100">
-              {item?.author}
-            </Text>
-            <Text className="text-sm font-interRegular text-gray-200">
+            <Text className="text-lg font-interBold text-primary-dark"></Text>
+            <Text className="text-sm font-interRegular text-primary-dark">
               {item?.category}
             </Text>
           </View>
@@ -24,7 +23,10 @@ const ArtWordCard = ({ item }: { item?: ArtWork }) => {
       </View>
       <Pressable
         onPress={() => {
-          console.log(item?.id);
+          router.push({
+            pathname: "/(modal)/[id]",
+            params: { id: item?.id! },
+          });
         }}
         className="w-full h-60 rounded-xl my-3"
       >
@@ -35,14 +37,14 @@ const ArtWordCard = ({ item }: { item?: ArtWork }) => {
       </Pressable>
       <View className="flex flex-row items-center justify-between w-full">
         <View className="flex flex-row gap-x-2 items-center">
-          <View className="flex flex-row items-center">
-            <Icon name="favourite" color={"#f5f5f5"} />
-            <Text className="text-neutral-100">10</Text>
-          </View>
-          <View className="flex flex-row items-center">
-            <Icon name="chat" color={"white"} />
-            <Text className="text-neutral-100">10</Text>
-          </View>
+          <Pressable className="flex flex-row items-center">
+            <Icon name="favourite" color={"#21302F"} />
+            <Text className="text-primary-dark">{item?.likes.length}</Text>
+          </Pressable>
+          <Pressable className="flex flex-row items-center">
+            <Icon name="chat" color={"#21302F"} />
+            <Text className="text-primary-dark">{item?.comments.length}</Text>
+          </Pressable>
         </View>
       </View>
     </View>

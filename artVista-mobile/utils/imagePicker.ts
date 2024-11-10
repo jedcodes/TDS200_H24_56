@@ -1,9 +1,7 @@
-import { uploadImage } from "@/api/uploadArtWorkAPI";
 import useArtWorkStore from "@/store/useArtWorkStore";
 import * as ImagePicker from "expo-image-picker";
 
-export const pickImage = async () => {
-  const { updateImageUrl } = useArtWorkStore();
+const pickImage = async () => {
   const result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.Images,
     allowsEditing: true,
@@ -12,6 +10,8 @@ export const pickImage = async () => {
   });
 
   if (!result.canceled) {
-    updateImageUrl(result.assets[0].uri);
+    useArtWorkStore.setState({ imageUrl: result.assets[0].uri });
   }
 };
+
+export default pickImage;

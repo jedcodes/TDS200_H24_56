@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, ActivityIndicator } from "react-native";
 import React from "react";
 import { ButtonProps } from "@/types/type";
 import Icon from "@/assets/icons";
@@ -6,13 +6,9 @@ import Icon from "@/assets/icons";
 const getBgVariantStyle = (variant: ButtonProps["bgVariant"]) => {
   switch (variant) {
     case "primary":
-      return "bg-primary";
-    case "secondary":
       return "bg-secondary";
-    case "danger":
-      return "bg-red-500";
-    case "success":
-      return "bg-green-500";
+    case "secondary":
+      return "bg-primary";
     default:
       return "bg-transparent";
   }
@@ -24,10 +20,6 @@ const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
       return "text-primary";
     case "secondary":
       return "text-black";
-    case "danger":
-      return "text-red-100";
-    case "success":
-      return "text-green-100";
     default:
       return "text-white";
   }
@@ -40,6 +32,7 @@ const CustomButton = ({
   IconRight,
   iconColor,
   className,
+  isLoading,
   btnRound = "rounded-full",
   bgVariant = "primary",
   textVariant = "primary",
@@ -54,13 +47,17 @@ const CustomButton = ({
       )} ${className}`}
     >
       {IconLeft && <Icon name={IconLeft} color={iconColor} />}
-      <Text
-        className={`text-lg font-interMedium ${getTextVariantStyle(
-          textVariant
-        )}`}
-      >
-        {title}
-      </Text>
+      {isLoading ? (
+        <ActivityIndicator size={"large"} color={"#FCFCFC"} />
+      ) : (
+        <Text
+          className={`text-2xl font-interMedium ${getTextVariantStyle(
+            textVariant
+          )}`}
+        >
+          {title}
+        </Text>
+      )}
       {IconRight && <Icon name={IconRight} color={iconColor} />}
     </Pressable>
   );

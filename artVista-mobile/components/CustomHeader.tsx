@@ -17,15 +17,13 @@ const CustomHeader = ({
 }) => {
   return (
     <View className="w-full items-center justify-between flex-row">
-      <Text className="font-interBold text-3xl tracking-widest text-neutral-100">
-        {title}
-      </Text>
+      <Text className="font-interBold text-3xl tracking-widest">{title}</Text>
       <View className="flex-row gap-2">
         <Pressable onPress={newPostRoute}>
-          <Icon name={iconOneName} color={"#A3E635"} />
+          <Icon name={iconOneName} color={"#21302F"} />
         </Pressable>
         <Pressable onPress={favouriteRoute}>
-          <Icon name={iconTwoName} color={"#A3E635"} />
+          <Icon name={iconTwoName} color={"#21302F"} />
         </Pressable>
       </View>
     </View>

@@ -1,41 +1,53 @@
 import { getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { db, storageRef } from "@/lib/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { ArtWork } from "@/types/type";
-import useArtWorkStore from "@/store/useArtWorkStore";
 
-export const uploadImage = async (artWork: ArtWork, fileType: string) => {
-  const fetchResponse = await fetch(artWork.imageUrl);
+export const uploadArtwork = async (artwork: ArtWork) => {
+  const fetchResponse = await fetch(artwork.imageUrl!);
   const blob = await fetchResponse.blob();
-  const updateProgress = useArtWorkStore((state) => state.updateProgress);
 
   const mediaStoreRef = storageRef("MediaStore/" + new Date().getTime());
 
-  const uploadMedia = uploadBytesResumable(mediaStoreRef, blob);
-
-  // Lytter etter eventer som skjer under opplastingen for å gi brukeren en bedre opplevelse
-  uploadMedia.on(
-    "state_changed",
-    (snapshot) => {
-      // Her kan vi f.eks. vise en progressbar ved å regne ut prosenten av opplastingen som er ferdig delt på totalt antall bytes som skal lastes opp
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-      console.log("Presisjon: " + progress + "%");
-      updateProgress(progress);
-    },
-    (error) => console.log(error)
-  ),
-    () => {
-      getDownloadURL(uploadMedia.snapshot.ref).then(async (downloadUrl) => {
-        console.log("Bilde opplastet til: " + downloadUrl);
-        // lagre bildet i databasen sammen med andre data
-        const docRef = await addDoc(collection(db, "artWorks"), {
-          ...artWork,
-          imageUrl: downloadUrl,
-          createdAt: new Date(),
-          fileType,
-        });
-        console.log(docRef.id);
+  uploadBytesResumable(mediaStoreRef, blob)
+    .then((_snapshot) => {
+      console.log("File uploaded successfully!");
+    })
+    .then((_response) => {
+      getDownloadURL(mediaStoreRef).then(async (url) => {
+        const artworkDetail: ArtWork = {
+          ...artwork,
+          imageUrl: url,
+        };
+        await setDoc(
+          doc(db, "artworks", "artwork_" + new Date().getTime().toString()),
+          artworkDetail
+        );
       });
-    };
+    });
+};
+
+export const getAllArtworks = async () => {
+  const docsRef = collection(db, "artworks");
+  const docsSnap = await getDocs(docsRef);
+
+  return docsSnap.docs.map((doc) => {
+    return { ...doc.data(), id: doc.id } as ArtWork;
+  });
+};
+
+export const getArtworkById = async (id: string) => {
+  console.log("id", id);
+  try {
+    const docRef = doc(db, "artworks", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return { ...docSnap.data(), id: docSnap.id } as ArtWork;
+    } else {
+      console.log("No such document!");
+    }
+  } catch (error) {
+    console.error("Error fetching document: ", error);
+  }
 };

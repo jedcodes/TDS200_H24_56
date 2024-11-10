@@ -20,14 +20,14 @@ const TabIcon = ({
     <View className={`flex items-center justify-center gap-2`}>
       <Icon
         name={icon}
-        color={`${focused ? "#A3E635" : "#848484"}`}
+        color={`${focused ? "#25C0B7" : "#21302F"}`}
         fontSize={28}
       />
       <Text
         className={`${
           focused
             ? "font-interSemiBold text-secondary"
-            : "font-interRegular text-primary-light"
+            : "font-interRegular text-primary-dark"
         } text-lg`}
       >
         {name}
@@ -40,13 +40,11 @@ const TabsLayout = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#A3E635",
         tabBarShowLabel: false,
-        tabBarInactiveTintColor: "#000",
         tabBarStyle: {
-          backgroundColor: "#1E1E1E",
+          backgroundColor: "#FCFCFC",
           height: hp(12),
-          borderTopColor: "#0A0A0A",
+          borderTopColor: "#FCFCFC",
         },
       }}
     >
@@ -56,7 +54,7 @@ const TabsLayout = () => {
           title: "Home",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="home" focused={focused} />
+            <TabIcon icon="home" name="Home" focused={focused} />
           ),
         }}
       />
@@ -64,7 +62,9 @@ const TabsLayout = () => {
         name="newPost"
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused }) => <TabIcon icon="add" focused={focused} />,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon icon="add" name="New Post" focused={focused} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -73,7 +73,7 @@ const TabsLayout = () => {
           title: "Favorites",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="favourite" focused={focused} />
+            <TabIcon icon="favourite" name="Favorites" focused={focused} />
           ),
         }}
       />
@@ -83,7 +83,7 @@ const TabsLayout = () => {
           title: "Profile",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="user" focused={focused} />
+            <TabIcon icon="user" name="Profile" focused={focused} />
           ),
         }}
       />

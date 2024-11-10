@@ -4,13 +4,16 @@ import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import Icon from "@/assets/icons";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { pickImage } from "@/utils/imagePicker";
+import pickImage from "@/utils/imagePicker";
+import CustomBackButton from "@/components/CustomBackButton";
+import { useRouter } from "expo-router";
 
 const CameraScreen = () => {
   const [facing, setFacing] = useState<CameraType>("back");
   const cameraRef = useRef<CameraView>(null);
   const [permission, requestPremission] = useCameraPermissions();
   const { top } = useSafeAreaInsets();
+  const router = useRouter();
 
   if (!permission) {
     return <View />;
@@ -31,6 +34,9 @@ const CameraScreen = () => {
   return (
     <View className="flex flex-1 justify-center">
       <CameraView ref={cameraRef} style={{ flex: 1 }} facing={facing}>
+        <View style={{ paddingTop: top, paddingHorizontal: top / 2 }}>
+          <CustomBackButton onPress={() => router.back()} />
+        </View>
         <View className="flex flex-1 justify-end bg-transparent ">
           <View
             style={{ marginBottom: top }}
