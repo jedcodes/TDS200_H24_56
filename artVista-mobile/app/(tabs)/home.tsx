@@ -9,26 +9,17 @@ import { useRouter } from "expo-router";
 import { ArtWork } from "@/types/type";
 import { collection, doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { getAllArtworks } from "@/api/uploadArtWorkAPI";
 
 const HomeScreen = () => {
   const router = useRouter();
   const [artworks, setArtworks] = useState<ArtWork[]>([]);
 
-  const fetchArtworks = async () => {
-    const unsub = onSnapshot(doc(db, "artworks"), (doc) => {
-      if (doc.exists()) {
-        setArtworks(doc.data().artworks);
-      }
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, "artworks"), (snapshot) => {
+      snapshot.forEach((change) => {});
     });
-    // const response = await getAllArtworks();
-    // setArtworks(response);
 
     return () => unsub();
-  };
-
-  useEffect(() => {
-    fetchArtworks();
   }, []);
 
   return (

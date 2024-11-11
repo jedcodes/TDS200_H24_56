@@ -1,4 +1,4 @@
-import { View, Text, Image, Pressable, Alert, ScrollView } from "react-native";
+import { View, Text, Alert, ScrollView, StatusBar } from "react-native";
 import React, { useState } from "react";
 import {
   widthPercentageToDP as wp,
@@ -6,10 +6,8 @@ import {
 } from "react-native-responsive-screen";
 import { Link, useRouter } from "expo-router";
 
-import ScreenContainer from "@/components/ScreenContainer";
 import TextInputField from "@/components/TextInputField";
 import CustomButton from "@/components/CustomButton";
-import CustomBackButton from "@/components/CustomBackButton";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -43,7 +41,7 @@ const SignInScreen = () => {
       style={{ paddingTop: top, paddingHorizontal: 6 }}
       className="flex-1 bg-primary"
     >
-      <CustomBackButton onPress={() => router.back()} />
+      <StatusBar barStyle="dark-content" />
       <View className="my-10">
         <Text
           style={{ fontSize: hp(4) }}
@@ -53,7 +51,7 @@ const SignInScreen = () => {
         </Text>
         <Text
           style={{ fontSize: hp(3) }}
-          className="font-interSemiBold  tracking-wider "
+          className="font-interSemiBold tracking-wider"
         >
           Welcome Back
         </Text>

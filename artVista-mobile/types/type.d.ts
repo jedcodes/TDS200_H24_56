@@ -51,10 +51,10 @@ declare interface InputInputFieldProps extends TextInputProps {
 declare interface Artist {
   id: string;
   displayName?: string;
-  photoURL: string | null;
-  email: string;
-  username: string;
-  favoriteArtworks: string[];
+  photoURL?: string | null;
+  email?: string;
+  username?: string;
+  favoriteArtworks?: string[];
 }
 
 declare interface ArtWork {
