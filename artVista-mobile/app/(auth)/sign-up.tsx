@@ -1,20 +1,18 @@
-import { View, Text, Alert, ScrollView, StatusBar } from "react-native";
+import { View, Text, Alert, StatusBar } from "react-native";
 import React, { useState } from "react";
 import { Link, useRouter } from "expo-router";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import { doc, setDoc } from "firebase/firestore";
 
 import TextInputField from "@/components/TextInputField";
 import CustomButton from "@/components/CustomButton";
 import CustomBackButton from "@/components/CustomBackButton";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "@/lib/firebase";
 import ScrollContainer from "@/components/ScrollContainer";
-import { Artist } from "@/types/type";
+import useSignup from "@/hooks/useSignup";
 
 const SignUpScreen = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { signup, error } = useSignup();
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -23,25 +21,7 @@ const SignUpScreen = () => {
 
   const handleSignUp = async () => {
     setIsLoading(true);
-    if (form.email === "" || form.password === "" || form.username === "") {
-      Alert.alert("Username, email or password is empty");
-    }
-    const authCredential = await createUserWithEmailAndPassword(
-      auth,
-      form.email,
-      form.password
-    );
-
-    // Legger til bruker i databasen
-    const docRef = doc(db, "artists", authCredential.user.uid);
-    const artistData: Artist = {
-      id: authCredential.user.uid,
-      email: form.email,
-      username: form.username,
-      photoURL: authCredential.user.photoURL,
-      favoriteArtworks: [],
-    };
-    await setDoc(docRef, artistData);
+    await signup(form.email, form.password, form.username);
     router.replace("/(tabs)/home");
     setIsLoading(false);
   };

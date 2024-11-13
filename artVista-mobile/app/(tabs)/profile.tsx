@@ -7,6 +7,7 @@ import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { useAuth } from "@/context/authContext";
 import { getArtistData } from "@/api/artistAPI";
 import { Artist } from "@/types/type";
+import { router } from "expo-router";
 
 const ProfileScreen = () => {
   const { top } = useSafeAreaInsets();
@@ -40,20 +41,32 @@ const ProfileScreen = () => {
         </View>
 
         <View className="flex-1 mt-10 w-full">
-          <View className="flex-1 gap-y-4 w-full items-center justify-center">
+          <View className="flex-1 gap-y-4 w-full items-center justify-center ">
             <View
               style={{ width: hp(12), height: hp(12) }}
-              className=" bg-secondary rounded-full"
-            ></View>
+              className=" bg-secondary rounded-full "
+            >
+              <Pressable onPress={() => router.push("/(modal)/editProfile")}>
+                <Icon name="edit" color={"white"} />
+              </Pressable>
+            </View>
             <Text className="text-white font-interSemiBold text-2xl tracking-wider">
-              {artistData?.username}
+              {artistData?.username?.toUpperCase()}
             </Text>
           </View>
         </View>
         <View className="flex-1 w-full items-center justify-center flex-row gap-3">
           <View className="p-4 items-center ">
             <Text className="text-xl font-interMedium text-neutral-100">
-              {artistData?.favoriteArtworks.length}
+              {artistData?.followers?.length}
+            </Text>
+            <Text className="text-xl font-interMedium text-neutral-500">
+              Followers
+            </Text>
+          </View>
+          <View className="p-4 items-center ">
+            <Text className="text-xl font-interMedium text-neutral-100">
+              {artistData?.favorites?.length}
             </Text>
             <Text className="text-xl font-interMedium text-neutral-500">
               Favourites

@@ -6,6 +6,7 @@ const ModalLayour = () => {
   return (
     <Stack>
       <Stack.Screen name="[id]" options={{ headerShown: false }} />
+      <Stack.Screen name="editProfile" options={{ headerShown: false }} />
     </Stack>
   );
 };

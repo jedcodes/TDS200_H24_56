@@ -2,13 +2,7 @@ import { storageRef } from "@/lib/firebase";
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
 
-export const useUpload = ({
-  imageUrl,
-  path = "ArtworkBucket",
-}: {
-  imageUrl: string;
-  path: string;
-}) => {
+export const useUpload = () => {
   const [url, setUrl] = useState<string | null>(null);
   const [progress, setProgress] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);

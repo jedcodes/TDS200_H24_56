@@ -4,21 +4,16 @@ import { Image } from "expo-image";
 import TextInputField from "@/components/TextInputField";
 import CustomBackButton from "@/components/CustomBackButton";
 import { useRouter } from "expo-router";
-import useArtWorkStore from "@/store/useArtWorkStore";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "@/context/authContext";
 import ScrollContainer from "@/components/ScrollContainer";
 import Icon from "@/assets/icons";
-import pickImage from "@/utils/imagePicker";
 import CustomButton from "@/components/CustomButton";
-import { uploadArtwork } from "@/api/uploadArtWorkAPI";
-import { ArtWork } from "@/types/type";
 import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
+import useFeedStore from "@/store/useFeedStore";
 
 const NewPostScreen = () => {
   const { isAuthenticated, artist } = useAuth();
-
   // sjekker om brukeren er autentisert. hvos ikke, sendes brukeren tilbake til innloggingsiden. Deene effekten kjører hver gang isAuthenticated endres.
   useEffect(() => {
     if (!isAuthenticated) {
@@ -29,38 +24,14 @@ const NewPostScreen = () => {
   const { top } = useSafeAreaInsets();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
+
   const {
     updateHashtags,
     updateCategory,
     updateDescription,
     updateTitle,
-    title,
-    description,
-    category,
-    hashtags,
     imageUrl,
-  } = useArtWorkStore();
-
-  const onUploadArtwork = async () => {
-    setIsLoading(true);
-    const artwork: ArtWork = {
-      id: uuidv4(),
-      title,
-      description,
-      category,
-      hashtags,
-      imageUrl,
-      artistId: artist?.uid!,
-      likes: [],
-      comments: [],
-      location: null,
-      createAt: new Date(),
-    };
-    await uploadArtwork(artwork);
-    setIsLoading(false);
-    router.replace("/(tabs)/home");
-  };
-
+  } = useFeedStore();
   return (
     <ScrollContainer>
       <StatusBar barStyle="dark-content" />
@@ -72,7 +43,7 @@ const NewPostScreen = () => {
               Publish new Art Work
             </Text>
             <Text className="text-neutral-500">
-              Fill all destails in to add new artwork.
+              Fill all details in to add new artwork.
             </Text>
           </View>
         </View>
@@ -119,7 +90,7 @@ const NewPostScreen = () => {
           <CustomButton
             title="Add New Artwork"
             isLoading={isLoading}
-            onPress={() => onUploadArtwork()}
+            onPress={() => {}}
           />
         </View>
       </View>
