@@ -4,11 +4,11 @@ import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 const getAvatarSize = (size: string) => {
   switch (size) {
-    case "small":
+    case "sm":
       return { width: hp(3), height: hp(3) };
-    case "medium":
+    case "md":
       return { width: hp(4), height: hp(4) };
-    case "large":
+    case "lg":
       return { width: hp(6), height: hp(6) };
     default:
       return { width: hp(3), height: hp(3) };

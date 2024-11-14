@@ -11,6 +11,7 @@ import Icon from "@/assets/icons";
 import CustomButton from "@/components/CustomButton";
 import "react-native-get-random-values";
 import useFeedStore from "@/store/useFeedStore";
+import useCreatePost from "@/hooks/useCreatePost";
 
 const NewPostScreen = () => {
   const { isAuthenticated, artist } = useAuth();
@@ -22,8 +23,8 @@ const NewPostScreen = () => {
   }, [isAuthenticated]);
 
   const { top } = useSafeAreaInsets();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
+  const { handleCreatePost, isLoading } = useCreatePost();
 
   const {
     updateHashtags,
@@ -32,6 +33,12 @@ const NewPostScreen = () => {
     updateTitle,
     imageUrl,
   } = useFeedStore();
+
+  const uploadPost = async () => {
+    await handleCreatePost();
+    router.replace("/(tabs)/home");
+  };
+
   return (
     <ScrollContainer>
       <StatusBar barStyle="dark-content" />
@@ -90,7 +97,7 @@ const NewPostScreen = () => {
           <CustomButton
             title="Add New Artwork"
             isLoading={isLoading}
-            onPress={() => {}}
+            onPress={() => uploadPost()}
           />
         </View>
       </View>

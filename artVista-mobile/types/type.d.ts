@@ -85,7 +85,7 @@ declare interface Post {
   likes: string[];
   comments: Comment[];
   imageUrl?: string;
-  location: LocationObjectCoords | null;
+  location: LocationGeocodedAddress | null;
   createdAt: number;
 }
 

@@ -59,6 +59,16 @@ const TabsLayout = () => {
         }}
       />
       <Tabs.Screen
+        name="search"
+        options={{
+          title: "Search",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon icon="search" name="Search" focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="newPost"
         options={{
           headerShown: false,

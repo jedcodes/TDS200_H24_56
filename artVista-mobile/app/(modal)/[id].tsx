@@ -1,83 +1,33 @@
-import { View, Text, ScrollView, Pressable, TextInput } from "react-native";
-import { Image } from "expo-image";
-import React, { useEffect, useState } from "react";
+import { View, Text, TextInput } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { getArtworkById } from "@/api/uploadArtWorkAPI";
-import { ArtWork } from "@/types/type";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { useAuth } from "@/context/authContext";
+import useFetchFeedById from "@/hooks/useFetchFeedById";
+import Loading from "@/components/Loading";
+import ScrollContainer from "@/components/ScrollContainer";
+import PostFeedCard from "@/components/PostFeedCard";
 import Icon from "@/assets/icons";
-import TextInputField from "@/components/TextInputField";
 
-const ArtworkDetailScreen = () => {
+const PostDetailScreen = () => {
   const { id } = useLocalSearchParams();
-  const [artwork, setArtwork] = useState<ArtWork | null>(null);
-  const { artist } = useAuth();
+  const { post, isLoading } = useFetchFeedById(id as string);
 
-  useEffect(() => {
-    const fetchArtwork = async () => {
-      const result = await getArtworkById(id as string);
-      setArtwork(result!);
-    };
-    fetchArtwork();
-  }, []);
+  if (isLoading) {
+    return <Loading />;
+  }
 
+  console.log(post);
   return (
-    <ScrollView style={{ paddingHorizontal: wp(2), paddingVertical: wp(7) }}>
-      <View
-        style={{ borderWidth: 0.8 }}
-        className="flex flex-col items-center p-4  border-neutral-300 rounded-2xl"
-      >
-        <View className="flex flex-row w-full gap-x-2">
-          <Image
-            source={
-              artist?.photoURL
-                ? artist.photoURL
-                : require("@/assets/images/avatar.jpg")
-            }
-            style={{ width: hp(5), height: hp(5), borderRadius: 20 }}
-          />
-          <View className="flex flex-col items-start my-2">
-            <Text className="font-interSemiBold">username</Text>
-            <Text className="text-neutral-500 font-interRegular tracking-wider">
-              Location
-            </Text>
-          </View>
+    <ScrollContainer>
+      <PostFeedCard hasShadow={false} post={post} />
+      <View className=" flex flex-row flex-1 items-center w-full justify-between ">
+        <View className="px-2 py-3 rounded-lg border-[2px] w-full">
+          <TextInput />
         </View>
-        <View className="flex flex-row items-center w-full">
-          <Text>{artwork?.description}</Text>
-        </View>
-        <Image
-          source={artwork?.imageUrl}
-          style={{
-            width: wp(90),
-            height: hp(40),
-            borderRadius: 12,
-          }}
-        />
-        <View className="flex flex-row w-full mt-2">
-          <View className="flex flex-row gap-x-2 items-center">
-            <View className="flex flex-row items-center">
-              <Icon name="favourite" color={"#21302F"} />
-              <Text className="text-primary-dark">{artwork?.likes.length}</Text>
-            </View>
-            <View className="flex flex-row items-center">
-              <Icon name="chat" color={"#21302F"} />
-              <Text className="text-primary-dark">
-                {artwork?.comments.length}
-              </Text>
-            </View>
-          </View>
+        <View className="w-full">
+          <Text>Send</Text>
         </View>
       </View>
-      <View className="flex-row items-center ">
-        <TextInputField placeholder="Type comment" />
-      </View>
-    </ScrollView>
+    </ScrollContainer>
   );
 };
 
-export default ArtworkDetailScreen;
+export default PostDetailScreen;

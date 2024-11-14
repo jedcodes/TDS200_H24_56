@@ -7,12 +7,11 @@ import { create } from "zustand";
 // og en funksjon for å legge til en kommentar til en post.
 const usePostStore = create<PostStoreState>((set) => ({
   posts: [],
+
   createPost: (post) => set((state) => ({ posts: [...state.posts, post] })),
-  deletePost: (postId) =>
-    set((state) => ({
-      posts: state.posts.filter((post) => post.id !== postId),
-    })),
+
   setPosts: (posts) => set({ posts }),
+
   addComment: (postId, comment) =>
     set((state) => ({
       posts: state.posts.map((post) => {
@@ -21,6 +20,11 @@ const usePostStore = create<PostStoreState>((set) => ({
         }
         return post;
       }),
+    })),
+
+  deletePost: (postId) =>
+    set((state) => ({
+      posts: state.posts.filter((post) => post.id !== postId),
     })),
 }));
 
