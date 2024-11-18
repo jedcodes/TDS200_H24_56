@@ -1,9 +1,11 @@
-import { Slot, Stack, useRouter, useSegments } from "expo-router";
+import { Stack } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import "../global.css";
 import { useEffect } from "react";
-import { AuthProvider, useAuth } from "@/context/authContext";
+import { AuthProvider } from "@/context/authContext";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -40,7 +42,11 @@ function InitialLayout() {
 const RootLayout = () => {
   return (
     <AuthProvider>
-      <InitialLayout />
+      <GestureHandlerRootView>
+        <BottomSheetModalProvider>
+          <InitialLayout />
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </AuthProvider>
   );
 };

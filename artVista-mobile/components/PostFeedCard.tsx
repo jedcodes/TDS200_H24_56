@@ -1,38 +1,36 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import React from "react";
+import React, { useCallback, useRef } from "react";
 import { Post } from "@/types/type";
 import CustomAvatar from "./CustomAvatar";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import { Image } from "expo-image";
 import Icon from "@/assets/icons";
 import { router } from "expo-router";
+import useGetArtistById from "@/hooks/useGetArtistById";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import CommentBottomSheet from "./CommentBottomSheet";
 
-const PostFeedCard = ({
-  hasShadow = true,
-  post,
-}: {
-  hasShadow?: boolean;
-  post: Post | null;
-}) => {
-  const customShadow = {
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 1,
-  };
-
+const PostFeedCard = ({ post }: { post: Post }) => {
+  const { artistProfile } = useGetArtistById(post?.artistId!);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
   return (
-    <View style={[styles.container, hasShadow && customShadow]}>
+    <View style={[styles.container]}>
       {/** Header */}
       <View className="flex flex-row justify-between">
         <View className="gap-2 flex flex-row items-center">
-          <CustomAvatar size="md" />
+          <CustomAvatar
+            size="sm"
+            showIcon={false}
+            imageUrl={artistProfile?.photoURL}
+          />
           <View className="gap-2 flex flex-col">
-            <Text className="texr-lg font-interSemiBold">{post?.title}</Text>
-            <Text>{post?.createdAt}</Text>
+            <Text className="text-lg font-interSemiBold">
+              {artistProfile?.username}
+            </Text>
+            <Text>{post?.location.region}</Text>
           </View>
         </View>
       </View>
@@ -66,12 +64,13 @@ const PostFeedCard = ({
           <Text>{post?.likes.length}</Text>
         </View>
         <View className="flex flex-row items-center">
-          <Pressable>
+          <Pressable onPress={handlePresentModalPress}>
             <Icon name="chat" />
           </Pressable>
           <Text>{post?.comments.length}</Text>
         </View>
       </View>
+      <CommentBottomSheet ref={bottomSheetModalRef} comments={post.comments} />
     </View>
   );
 };

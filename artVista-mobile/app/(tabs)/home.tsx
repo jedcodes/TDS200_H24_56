@@ -4,59 +4,70 @@ import {
   FlatList,
   StatusBar,
   ActivityIndicator,
+  RefreshControl,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { router, useRouter } from "expo-router";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 import ScreenContainer from "@/components/ScreenContainer";
 import CustomHeader from "@/components/CustomHeader";
 import EmptyList from "@/components/EmptyList";
-import useFetchFeeds from "@/hooks/useFetchFeeds";
 import Loading from "@/components/Loading";
 import PostFeedCard from "@/components/PostFeedCard";
 import usePaginatedPosts from "@/hooks/usePaginatedPosts";
-import ToastManager from "toastify-react-native";
+import ToastManager, { Toast } from "toastify-react-native";
+import usePostStore from "@/store/usePostStore";
+import { useEffect, useRef, useState } from "react";
+import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
+import useFetchArtist from "@/hooks/useFetchArtist";
 
 const HomeScreen = () => {
-  const router = useRouter();
-  const { posts, isLoading, loadMore, hasMore } = usePaginatedPosts(2);
+  const [refreshing, setRefreshing] = useState(false);
+  const { getPaginatedPosts } = usePaginatedPosts();
+  const { setPosts, posts } = usePostStore();
+  const { artist } = useFetchArtist();
+  const lastDocRef = useRef<QueryDocumentSnapshot<
+    DocumentData,
+    DocumentData
+  > | null>(null);
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  const fetchFeedPost = async () => {
+    setRefreshing(true);
+    try {
+      const { snapshots, last } = await getPaginatedPosts(lastDocRef.current);
+      lastDocRef.current = last;
+      setPosts(snapshots);
+    } catch (error) {
+      Toast.error("Failed to fetch posts");
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchFeedPost();
+  }, []);
+
   return (
     <ScreenContainer bgColor="bg-primary">
       <ToastManager />
       <StatusBar barStyle="dark-content" />
       <FlatList
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.5}
         data={posts}
         contentContainerStyle={{ paddingTop: 20, paddingHorizontal: wp(4) }}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <PostFeedCard hasShadow post={item} />}
+        renderItem={({ item }) => <PostFeedCard post={item} />}
+        // refreshControl={
+        //   <RefreshControl refreshing={refreshing} onRefresh={loadMore} />
+        // }
         ListHeaderComponent={() => (
           <View className="my-6 space-y-6">
-            <CustomHeader
-              newPostRoute={() => router.push("/(tabs)/newPost")}
-              title="ArtVista"
-              iconOneName="add"
-              iconTwoName={"favourite"}
-            />
+            <CustomHeader title="ArtVista" />
           </View>
         )}
         ListEmptyComponent={() => (
           <EmptyList title="No Art works are avalible at this moment" />
         )}
-        ListFooterComponent={
-          isLoading ? (
-            <ActivityIndicator size="large" color="#0000ff" />
-          ) : hasMore ? null : (
-            <Text style={{ textAlign: "center", marginTop: 16 }}>
-              No more posts
-            </Text>
-          )
-        }
       />
     </ScreenContainer>
   );

@@ -73,6 +73,7 @@ const useCreatePost = () => {
 
       const postDocRef = await addDoc(collection(db, "posts"), newPost);
       await updateDoc(artistDocRef, { posts: arrayUnion(postDocRef.id) });
+      createPost({ ...newPost, id: postDocRef.id });
     } catch (error) {
       Toast.error("An error occurred while creating post");
     } finally {

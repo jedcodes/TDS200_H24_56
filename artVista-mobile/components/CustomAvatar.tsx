@@ -8,13 +8,13 @@ import { router } from "expo-router";
 const getAvatarSize = (size: string) => {
   switch (size) {
     case "sm":
-      return { width: hp(3), height: hp(3) };
-    case "md":
       return { width: hp(4), height: hp(4) };
+    case "md":
+      return { width: hp(6), height: hp(6) };
     case "lg":
       return { width: hp(14), height: hp(14) };
     default:
-      return { width: hp(3), height: hp(3) };
+      return;
   }
 };
 
@@ -35,13 +35,13 @@ const CustomAvatar = ({
         ...avatarSize,
         position: "relative", // // Ensures the image and icon don't spill outside the parent
       }}
-      className="rounded-full bg-red-500"
+      className="rounded-full "
     >
       <Image
         source={
           imageUrl && imageUrl !== ""
             ? { uri: imageUrl }
-            : require("@/assets/images/avatar.jpg")
+            : require("@/assets/images/defaultUser.png")
         }
         style={{
           width: "100%",

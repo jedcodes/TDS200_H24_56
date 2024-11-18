@@ -32,6 +32,7 @@ const CustomTextInput = ({
       >
         {icon && <Feather name={icon} size={hp(2.7)} color={"gray"} />}
         <TextInput
+          placeholderTextColor={"gray"}
           autoCapitalize="none"
           style={{ fontSize: hp(2) }}
           className={`flex-1 font-interSemiBold text-neutral-700 ${inputStyle}`}

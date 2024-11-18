@@ -74,7 +74,7 @@ const NewPostScreen = () => {
           </Pressable>
         </View>
 
-        <View className="flex w-full">
+        <View className="flex w-full gap-5">
           <TextInputField
             label="Title"
             placeholder="Enter image title"
