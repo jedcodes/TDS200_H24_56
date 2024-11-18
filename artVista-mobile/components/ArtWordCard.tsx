@@ -1,17 +1,17 @@
 import { View, Text, Pressable } from "react-native";
 import React from "react";
 import { Image } from "expo-image";
-import { ArtWork } from "@/types/type";
+import { Post } from "@/types/type";
 import CustomAvatar from "./CustomAvatar";
 import Icon from "@/assets/icons";
 import { router } from "expo-router";
 
-const ArtWordCard = ({ item }: { item?: ArtWork }) => {
+const ArtWordCard = ({ item }: { item?: Post }) => {
   return (
     <View className="flex flex-col items-center px-4 mb-14">
       <View className="flex flex-row items-center justify-between w-full">
         <View className="flex flex-row gap-2 items-center">
-          <CustomAvatar size="medium" />
+          <CustomAvatar size="medium" showIcon={false} />
           <View className="flex justify-center ml-3 gap-y-1">
             <Text className="text-lg font-interBold text-primary-dark"></Text>
             <Text className="text-sm font-interRegular text-primary-dark">

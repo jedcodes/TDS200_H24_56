@@ -43,8 +43,8 @@ const TabsLayout = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "#FCFCFC",
-          height: hp(12),
           borderTopColor: "#FCFCFC",
+          elevation: 1,
         },
       }}
     >
@@ -54,7 +54,7 @@ const TabsLayout = () => {
           title: "Home",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="home" name="Home" focused={focused} />
+            <TabIcon icon="home" focused={focused} />
           ),
         }}
       />
@@ -64,7 +64,7 @@ const TabsLayout = () => {
           title: "Search",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="search" name="Search" focused={focused} />
+            <TabIcon icon="search" focused={focused} />
           ),
         }}
       />
@@ -72,9 +72,7 @@ const TabsLayout = () => {
         name="newPost"
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <TabIcon icon="add" name="New Post" focused={focused} />
-          ),
+          tabBarIcon: ({ focused }) => <TabIcon icon="add" focused={focused} />,
         }}
       />
       <Tabs.Screen
@@ -83,7 +81,7 @@ const TabsLayout = () => {
           title: "Favorites",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="favourite" name="Favorites" focused={focused} />
+            <TabIcon icon="favourite" focused={focused} />
           ),
         }}
       />
@@ -93,7 +91,7 @@ const TabsLayout = () => {
           title: "Profile",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="user" name="Profile" focused={focused} />
+            <TabIcon icon="user" focused={focused} />
           ),
         }}
       />

@@ -1,12 +1,12 @@
 import { View, Text, Pressable, Alert, StatusBar } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Image } from "expo-image";
-import TextInputField from "@/components/TextInputField";
+import TextInputField from "@/components/CustomTextInput";
 import CustomBackButton from "@/components/CustomBackButton";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "@/context/authContext";
-import ScrollContainer from "@/components/ScrollContainer";
+import ScrollContainer from "@/components/CustomScrollView";
 import Icon from "@/assets/icons";
 import CustomButton from "@/components/CustomButton";
 import "react-native-get-random-values";
@@ -14,7 +14,8 @@ import useFeedStore from "@/store/useFeedStore";
 import useCreatePost from "@/hooks/useCreatePost";
 
 const NewPostScreen = () => {
-  const { isAuthenticated, artist } = useAuth();
+  const { isAuthenticated } = useAuth();
+
   // sjekker om brukeren er autentisert. hvos ikke, sendes brukeren tilbake til innloggingsiden. Deene effekten kjører hver gang isAuthenticated endres.
   useEffect(() => {
     if (!isAuthenticated) {

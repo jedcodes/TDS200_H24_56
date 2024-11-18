@@ -46,7 +46,7 @@ export default function Index() {
           </Text>
           <View>
             <Text className="text-left  text-xl">
-              Follw your favorite artists, and view their latest art piece or
+              Follow your favorite artists, and view their latest art piece or
               connect to new artists and share art piece with your friends.
             </Text>
           </View>

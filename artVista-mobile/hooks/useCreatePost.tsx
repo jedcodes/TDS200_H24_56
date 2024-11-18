@@ -1,4 +1,3 @@
-import Toast from "react-native-toast-message";
 import { v4 as uuidv4 } from "uuid";
 import usePostStore from "@/store/usePostStore";
 import { Post } from "@/types/type";
@@ -15,6 +14,7 @@ import {
 import useFeedStore from "@/store/useFeedStore";
 import { useAuth } from "@/context/authContext";
 import * as Location from "expo-location";
+import { Toast } from "toastify-react-native";
 
 const useCreatePost = () => {
   const { artist } = useAuth();
@@ -29,11 +29,7 @@ const useCreatePost = () => {
     const getCurrentLoaction = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        Toast.show({
-          type: "error",
-          text1: "Error",
-          text2: "Permission to access location was denied",
-        });
+        Toast.error("Permission to access location was denied");
         return;
       }
       const location = await Location.getCurrentPositionAsync();
@@ -78,11 +74,7 @@ const useCreatePost = () => {
       const postDocRef = await addDoc(collection(db, "posts"), newPost);
       await updateDoc(artistDocRef, { posts: arrayUnion(postDocRef.id) });
     } catch (error) {
-      Toast.show({
-        type: "error",
-        text1: "Error",
-        text2: "Failed to create post",
-      });
+      Toast.error("An error occurred while creating post");
     } finally {
       setIsLoading(false);
     }

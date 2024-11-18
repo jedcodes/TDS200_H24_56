@@ -15,6 +15,7 @@ import useFetchFeeds from "@/hooks/useFetchFeeds";
 import Loading from "@/components/Loading";
 import PostFeedCard from "@/components/PostFeedCard";
 import usePaginatedPosts from "@/hooks/usePaginatedPosts";
+import ToastManager from "toastify-react-native";
 
 const HomeScreen = () => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const HomeScreen = () => {
   }
   return (
     <ScreenContainer bgColor="bg-primary">
+      <ToastManager />
       <StatusBar barStyle="dark-content" />
       <FlatList
         onEndReached={loadMore}

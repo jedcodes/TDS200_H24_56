@@ -1,5 +1,5 @@
 import { auth } from "@/lib/firebase";
-import { onAuthStateChanged, User as Artist } from "firebase/auth";
+import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import {
   createContext,
   ReactNode,
@@ -9,16 +9,23 @@ import {
 } from "react";
 
 type AuthContextType = {
-  artist: null | Artist;
+  artist: null | User;
   isAuthenticated: boolean;
   loading: boolean;
-  signOut?: () => void;
+  setUser: (user: User) => void;
+  signout: () => void;
 };
 
-const AuthContext = createContext<Partial<AuthContextType>>({});
+const AuthContext = createContext<AuthContextType>({
+  artist: null,
+  isAuthenticated: false,
+  loading: false,
+  setUser: () => {},
+  signout: () => {},
+});
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [artist, setArtist] = useState<null | Artist>(null);
+  const [artist, setArtist] = useState<null | User>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -39,18 +46,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => unsubscribe();
   }, []);
 
-  const signOut = async () => {
-    setLoading(true);
-    await auth.signOut();
+  const setUser = (user: User) => {
+    setArtist(user);
+  };
+
+  const signout = async () => {
+    await signOut(auth);
+    setArtist(null);
     setIsAuthenticated(false);
-    setLoading(false);
   };
 
   return (
-    <AuthContext.Provider value={{ artist, isAuthenticated, loading, signOut }}>
+    <AuthContext.Provider
+      value={{ artist, isAuthenticated, loading, setUser, signout }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};

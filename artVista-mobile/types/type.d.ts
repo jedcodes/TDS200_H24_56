@@ -67,6 +67,8 @@ declare interface Artist {
   photoURL?: string;
   email?: string;
   username?: string;
+  location: string;
+  phone: string;
   posts?: string[];
   favorites?: string[];
   followers?: string[];

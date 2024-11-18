@@ -1,51 +1,48 @@
-import { View, Text, Alert, ScrollView, StatusBar } from "react-native";
-import React, { useState } from "react";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { View, Text, StatusBar, Alert } from "react-native";
+import React, { useRef, useState } from "react";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { Link, useRouter } from "expo-router";
+import ToastManager, { Toast } from "toastify-react-native";
 
-import TextInputField from "@/components/TextInputField";
+import TextInputField from "@/components/CustomTextInput";
 import CustomButton from "@/components/CustomButton";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import CustomScrollView from "@/components/CustomScrollView";
 
 const SignInScreen = () => {
-  const { top } = useSafeAreaInsets();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
   const handleSignIn = async () => {
-    setIsLoading(true);
-    if (form.email === "" || form.password === "") {
-      Alert.alert("Email or password is empty");
+    if (!form.email || !form.password) {
+      Toast.error("Fyll inn alle feltene");
     }
-    const respone = await signInWithEmailAndPassword(
-      auth,
-      form.email,
-      form.password
-    );
-    console.log(respone);
-    router.replace("/(tabs)/home");
-    setIsLoading(false);
+
+    try {
+      setIsLoading(true);
+      await signInWithEmailAndPassword(auth, form.email, form.password);
+      router.replace("/(tabs)/home");
+    } catch (error) {
+      ToastManager.error("Feil brukernavn eller passord");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <ScrollView
-      style={{ paddingTop: top, paddingHorizontal: 6 }}
-      className="flex-1 bg-primary"
-    >
+    <CustomScrollView>
+      <ToastManager />
       <StatusBar barStyle="dark-content" />
       <View className="my-10">
         <Text
           style={{ fontSize: hp(4) }}
-          className="font-interExtraBold tracking-wider"
+          className="font-interExtraBold tracking-wider text-secondary"
         >
           ArtVista
         </Text>
@@ -56,7 +53,7 @@ const SignInScreen = () => {
           Welcome Back
         </Text>
       </View>
-      <View>
+      <View className="gap-10">
         <TextInputField
           iconStyle="#25C0B7"
           label="Email"
@@ -72,21 +69,26 @@ const SignInScreen = () => {
           secureTextEntry={true}
           onChangeText={(text) => setForm({ ...form, password: text })}
         />
-        <CustomButton
-          isLoading={isLoading}
-          title="Login"
-          onPress={() => handleSignIn()}
-          bgVariant="primary"
-          className="mt-5"
-        />
+        <View className="flex-row justify-end flex-1">
+          <Link href="/(auth)/forgot-password">
+            <Text className="text-secondary">Forgot Password?</Text>
+          </Link>
+        </View>
       </View>
+      <CustomButton
+        isLoading={isLoading}
+        title="Login"
+        onPress={handleSignIn}
+        bgVariant="primary"
+        className="mt-5"
+      />
       <View className="w-full flex flex-row justify-center items-center mb-5">
         <Link href="/(auth)/sign-up">
           Dont already have an account?
-          <Text className="ml-2 text-secondary">Register</Text>
+          <Text className="text-secondary">Register</Text>
         </Link>
       </View>
-    </ScrollView>
+    </CustomScrollView>
   );
 };
 
