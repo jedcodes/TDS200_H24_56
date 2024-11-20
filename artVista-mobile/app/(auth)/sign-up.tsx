@@ -4,7 +4,6 @@ import { Link, useRouter } from "expo-router";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 import CustomButton from "@/components/CustomButton";
-import CustomBackButton from "@/components/CustomBackButton";
 import useSignup from "@/hooks/useSignup";
 import CustomTextInput from "@/components/CustomTextInput";
 import CustomScrollView from "@/components/CustomScrollView";
@@ -41,7 +40,6 @@ const SignUpScreen = () => {
     <CustomScrollView>
       <ToastManager />
       <StatusBar barStyle="dark-content" />
-      <CustomBackButton onPress={() => router.back()} />
       <View className="my-10">
         <Text
           style={{ fontSize: hp(4) }}
@@ -82,7 +80,7 @@ const SignUpScreen = () => {
         />
       </View>
       <View className="w-full flex flex-row justify-center items-center mb-5">
-        <Link href="/(auth)/sign-in">
+        <Link href="/(auth)/sign-in" className="text-white">
           Har du en bruker fra før?
           <Text className="ml-2 text-secondary">Log inn</Text>
         </Link>

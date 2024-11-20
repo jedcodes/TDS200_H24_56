@@ -17,6 +17,7 @@ import RepeatIcon from "./Repeat";
 import Navigation03Icon from "./Send";
 import Logout01Icon from "./Logout";
 import PencilEdit02Icon from "./Edit";
+import Delete02Icon from "./Delete";
 
 const icons = {
   user: UserCircleIcon,
@@ -37,6 +38,7 @@ const icons = {
   send: Navigation03Icon,
   logout: Logout01Icon,
   edit: PencilEdit02Icon,
+  delete: Delete02Icon,
 };
 
 type IconProps = {

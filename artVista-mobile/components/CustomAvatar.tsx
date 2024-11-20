@@ -21,7 +21,7 @@ const getAvatarSize = (size: string) => {
 const CustomAvatar = ({
   size,
   imageUrl,
-  showIcon = false,
+  showIcon,
 }: {
   size: string;
   imageUrl?: string;
@@ -57,7 +57,7 @@ const CustomAvatar = ({
             router.push("/(modal)/editProfile");
           }}
         >
-          <Icon name="edit" color="white" />
+          <Icon name="edit" color="#FF204E" />
         </Pressable>
       )}
     </View>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: hp(0.5),
     right: hp(-1.5),
-    backgroundColor: "#25C0B7",
+    backgroundColor: "#0C0C0C",
     borderRadius: 12,
     padding: hp(0.5),
   },

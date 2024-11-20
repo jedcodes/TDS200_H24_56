@@ -48,7 +48,7 @@ const SignInScreen = () => {
         </Text>
         <Text
           style={{ fontSize: hp(3) }}
-          className="font-interSemiBold tracking-wider"
+          className="font-interSemiBold tracking-wider text-neutral-600"
         >
           Welcome Back
         </Text>

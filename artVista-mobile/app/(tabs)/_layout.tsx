@@ -2,10 +2,6 @@ import { View, Text } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import Icon from "@/assets/icons";
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from "react-native-responsive-screen";
 
 const TabIcon = ({
   focused,
@@ -20,8 +16,8 @@ const TabIcon = ({
     <View className={`flex items-center justify-center gap-2`}>
       <Icon
         name={icon}
-        color={`${focused ? "#25C0B7" : "#21302F"}`}
-        fontSize={28}
+        color={`${focused ? "#25C0B7" : "#FCFCFC"}`}
+        fontSize={26}
       />
       <Text
         className={`${
@@ -42,8 +38,8 @@ const TabsLayout = () => {
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: "#FCFCFC",
-          borderTopColor: "#FCFCFC",
+          backgroundColor: "#0C0C0C",
+          borderTopColor: "#0C0C0C",
           elevation: 1,
         },
       }}

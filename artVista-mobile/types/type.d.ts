@@ -7,13 +7,13 @@ export type ScreenContainerProps = {
 };
 
 export type ProfileStoreState = {
-  artisitProfile: Artist | null;
-  setProfile: (profile: Artist) => void;
+  profilePosts: Post[];
+  setProfilePosts: (posts: Post[]) => void;
   addPost: (post: Post) => void;
   deletePost: (postId: string) => void;
 };
 
-export type PostStoreState = {
+export interface PostStoreState {
   posts: Post[];
   comments: Comment[];
   addPost: (post: Post) => void;
@@ -22,7 +22,7 @@ export type PostStoreState = {
   setComments: (comments: Comment[]) => void;
   deletePost: (postId: string) => void;
   deleteComment: (commentId: string) => void;
-};
+}
 
 export type FeedStoreState = {
   imageUrl: string | null;

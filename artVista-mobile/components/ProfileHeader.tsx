@@ -9,7 +9,7 @@ import { useAuth } from "@/context/authContext";
 import { Toast } from "toastify-react-native";
 import CustomAvatar from "./CustomAvatar";
 
-const ProfileHeader = () => {
+const ProfileHeader = ({ canEdit }: { canEdit: boolean }) => {
   const { artist } = useFetchArtist();
   const { signout } = useAuth();
   const { top } = useSafeAreaInsets();
@@ -17,7 +17,6 @@ const ProfileHeader = () => {
   const handleSignOut = () => {
     signout();
     Toast.success("Logged out successfully");
-    router.replace("/(tabs)/home");
   };
   return (
     <View
@@ -30,14 +29,14 @@ const ProfileHeader = () => {
         </Text>
         <View className="flex-row gap-2">
           <Pressable onPress={handleSignOut}>
-            <Icon name="logout" color={"red"} />
+            <Icon name="logout" color={"white"} />
           </Pressable>
         </View>
       </View>
 
       <View className="flex-1 mt-10 w-full">
         <View className="flex-1 gap-y-4 w-full items-center justify-center ">
-          <CustomAvatar size="lg" showIcon />
+          <CustomAvatar size="lg" showIcon={canEdit} />
           <Text className="text-white font-interSemiBold text-2xl tracking-wider">
             {artist?.username?.toUpperCase()}
           </Text>
@@ -48,7 +47,7 @@ const ProfileHeader = () => {
           <Text className="text-xl font-interMedium text-neutral-100">
             {artist?.followers?.length}
           </Text>
-          <Text className="text-xl font-interMedium text-neutral-500">
+          <Text className="text-xl font-interMedium text-neutral-100">
             Followers
           </Text>
         </View>
@@ -56,7 +55,7 @@ const ProfileHeader = () => {
           <Text className="text-xl font-interMedium text-neutral-100">
             {artist?.favorites?.length}
           </Text>
-          <Text className="text-xl font-interMedium text-neutral-500">
+          <Text className="text-xl font-interMedium text-neutral-100">
             Favourites
           </Text>
         </View>
@@ -64,8 +63,8 @@ const ProfileHeader = () => {
           <Text className="text-xl font-interMedium text-neutral-100">
             {artist?.posts?.length}
           </Text>
-          <Text className="text-xl font-interMedium text-neutral-500">
-            Art Works
+          <Text className="text-xl font-interMedium text-neutral-100">
+            Posts
           </Text>
         </View>
       </View>

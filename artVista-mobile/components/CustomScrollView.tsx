@@ -10,8 +10,8 @@ const CustomScrollView = ({ children }: { children: ReactNode }) => {
       style={{
         paddingTop: top,
         paddingHorizontal: wp(5),
-        backgroundColor: "#FCFCFC",
       }}
+      className="bg-primary"
     >
       {children}
     </ScrollView>

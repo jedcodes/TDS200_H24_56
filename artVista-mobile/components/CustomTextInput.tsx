@@ -28,7 +28,7 @@ const CustomTextInput = ({
     >
       <View
         style={{ height: hp(7), borderWidth: 0.4, borderCurve: "continuous" }}
-        className={`flex-row px-4 bg-neutral-100 items-center gap-4 rounded-2xl border-primary-dark ${containerStyle}`}
+        className={`flex-row px-4 bg-primary-gary items-center gap-4 rounded-2xl border-primary-gary ${containerStyle}`}
       >
         {icon && <Feather name={icon} size={hp(2.7)} color={"gray"} />}
         <TextInput
