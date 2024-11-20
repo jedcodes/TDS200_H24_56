@@ -1,4 +1,4 @@
-import { PostStoreState } from "@/types/type";
+import { Comment, Post, PostStoreState } from "@/types/type";
 import { create } from "zustand";
 
 // Her tar jef i bruk Zustand for å håndtere State til postene i appen.
@@ -7,25 +7,38 @@ import { create } from "zustand";
 // og en funksjon for å legge til en kommentar til en post.
 const usePostStore = create<PostStoreState>((set) => ({
   posts: [],
+  comments: [],
 
-  createPost: (post) => set((state) => ({ posts: [...state.posts, post] })),
+  setPosts: (posts: Post[]) => set({ posts }),
 
-  setPosts: (posts) => set({ posts }),
+  addPost: (newPost: Post) =>
+    set((state) => ({ posts: [...state.posts, newPost] })),
 
-  addComment: (postId, comment) =>
+  addComment: (postId: string, comment: Comment) =>
     set((state) => ({
       posts: state.posts.map((post) => {
         if (post.id === postId) {
-          return { ...post, comments: [...post.comments, comment] };
+          return {
+            ...post,
+            comments: [...post.comments, comment],
+          };
         }
         return post;
       }),
     })),
 
+  setComments: (comments: Comment[]) => set({ comments }),
+
   deletePost: (postId) =>
     set((state) => ({
       posts: state.posts.filter((post) => post.id !== postId),
     })),
+
+  deleteComment: (commentId) => {
+    set((state) => ({
+      comments: state.comments.filter((comment) => comment.id !== commentId),
+    }));
+  },
 }));
 
 export default usePostStore;

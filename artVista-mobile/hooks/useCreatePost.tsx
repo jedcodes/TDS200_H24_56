@@ -18,7 +18,7 @@ import { Toast } from "toastify-react-native";
 
 const useCreatePost = () => {
   const { artist } = useAuth();
-  const createPost = usePostStore((state) => state.createPost);
+  const addPost = usePostStore((state) => state.addPost);
   const { imageUrl, title, description, category, hashtags } = useFeedStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [location, setLocation] =
@@ -73,7 +73,8 @@ const useCreatePost = () => {
 
       const postDocRef = await addDoc(collection(db, "posts"), newPost);
       await updateDoc(artistDocRef, { posts: arrayUnion(postDocRef.id) });
-      createPost({ ...newPost, id: postDocRef.id });
+      addPost({ ...newPost, id: postDocRef.id });
+      Toast.success("Post created successfully");
     } catch (error) {
       Toast.error("An error occurred while creating post");
     } finally {

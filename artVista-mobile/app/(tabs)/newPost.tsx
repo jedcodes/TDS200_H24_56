@@ -12,6 +12,7 @@ import CustomButton from "@/components/CustomButton";
 import "react-native-get-random-values";
 import useFeedStore from "@/store/useFeedStore";
 import useCreatePost from "@/hooks/useCreatePost";
+import usePickImage from "@/hooks/usePickImage";
 
 const NewPostScreen = () => {
   const { isAuthenticated } = useAuth();
@@ -24,20 +25,26 @@ const NewPostScreen = () => {
   }, [isAuthenticated]);
 
   const { top } = useSafeAreaInsets();
+  const { URL, pickImage } = usePickImage();
   const router = useRouter();
   const { handleCreatePost, isLoading } = useCreatePost();
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    category: "",
+    hashtags: "",
+  });
 
-  const {
-    updateHashtags,
-    updateCategory,
-    updateDescription,
-    updateTitle,
-    imageUrl,
-  } = useFeedStore();
-
+  // Denne funksjonen gjøre tre ting, laster opp et nytt innlegg, sender brukeren til hjemmesiden og resetter formen.
   const uploadPost = async () => {
     await handleCreatePost();
     router.replace("/(tabs)/home");
+    setForm({
+      title: "",
+      description: "",
+      category: "",
+      hashtags: "",
+    });
   };
 
   return (
@@ -58,42 +65,60 @@ const NewPostScreen = () => {
 
         <View
           style={{ marginVertical: top / 2 }}
-          className="flex flex-row w-full gap-x-2"
+          className="flex items-center justify-center gap-5"
         >
-          {imageUrl && (
-            <Image
-              source={imageUrl}
-              style={{ width: 100, height: 100, borderRadius: 6 }}
-            />
-          )}
-          <Pressable
-            onPress={() => router.push("/(camera)/camera")}
-            className="p-6 rounded-xl border h-[90px] w-[90px] items-center justify-center"
-          >
-            <Icon name="media" />
-          </Pressable>
+          <View>
+            {URL ? (
+              <Image
+                source={URL}
+                style={{ width: 100, height: 100, borderRadius: 6 }}
+              />
+            ) : (
+              <Text>No Image Selected</Text>
+            )}
+          </View>
+          <View className="flex-row w-full items-center justify-center gap-10">
+            <Pressable
+              onPress={() => pickImage()}
+              className="p-4 rounded-xl gap-2 flex-row items-center justify-center bg-secondary"
+            >
+              <Icon name="media" color={"white"} />
+              <Text className="text-primary">Import</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => router.push("/(camera)/camera")}
+              className="p-4 rounded-xl gap-2 flex-row items-center justify-center bg-secondary"
+            >
+              <Icon name="media" color={"white"} />
+              <Text className="text-primary">Take Pic</Text>
+            </Pressable>
+          </View>
         </View>
 
         <View className="flex w-full gap-5">
           <TextInputField
             label="Title"
             placeholder="Enter image title"
-            onChangeText={(text) => updateTitle(text)}
+            onChangeText={(text) => setForm({ ...form, title: text })}
+            value={form.title}
           />
           <TextInputField
             label="Description"
             placeholder="Give your art an description"
-            onChangeText={(text) => updateDescription(text)}
+            onChangeText={(text) => setForm({ ...form, description: text })}
+            value={form.description}
           />
           <TextInputField
             label="Category"
             placeholder="Enter art piece category"
-            onChangeText={(text) => updateCategory(text)}
+            onChangeText={(text) => setForm({ ...form, category: text })}
+            value={form.category}
           />
           <TextInputField
             label="Hashtags"
             placeholder="Express your art by giving some hashtags"
-            onChangeText={(text) => updateHashtags(text)}
+            onChangeText={(text) => setForm({ ...form, hashtags: text })}
+            value={form.hashtags}
           />
           <CustomButton
             title="Add New Artwork"

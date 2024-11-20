@@ -9,13 +9,21 @@ import { router } from "expo-router";
 import useGetArtistById from "@/hooks/useGetArtistById";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import CommentBottomSheet from "./CommentBottomSheet";
+import useLikePost from "@/hooks/useLikePost";
 
 const PostFeedCard = ({ post }: { post: Post }) => {
   const { artistProfile } = useGetArtistById(post?.artistId!);
+  const { isLiked, likePost, likes } = useLikePost(post);
+
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
+
+  const toggleLike = async () => {
+    await likePost();
+  };
+
   return (
     <View style={[styles.container]}>
       {/** Header */}
@@ -58,10 +66,10 @@ const PostFeedCard = ({ post }: { post: Post }) => {
       {/** Footer */}
       <View className="flex flex-row gap-15">
         <View className="flex flex-row items-center">
-          <Pressable>
-            <Icon name="favourite" />
+          <Pressable onPress={toggleLike}>
+            <Icon name="favourite" color={isLiked ? "red" : "black"} />
           </Pressable>
-          <Text>{post?.likes.length}</Text>
+          <Text>{likes}</Text>
         </View>
         <View className="flex flex-row items-center">
           <Pressable onPress={handlePresentModalPress}>
@@ -70,7 +78,7 @@ const PostFeedCard = ({ post }: { post: Post }) => {
           <Text>{post?.comments.length}</Text>
         </View>
       </View>
-      <CommentBottomSheet ref={bottomSheetModalRef} comments={post.comments} />
+      <CommentBottomSheet ref={bottomSheetModalRef} posts={post} />
     </View>
   );
 };

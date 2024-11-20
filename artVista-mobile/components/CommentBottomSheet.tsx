@@ -1,40 +1,24 @@
-import React, { forwardRef, useCallback, useMemo, useRef } from "react";
-import BottomSheet, {
-  BottomSheetFlashList,
-  BottomSheetModal,
-  BottomSheetTextInput,
-} from "@gorhom/bottom-sheet";
+import React, { forwardRef, useEffect, useMemo } from "react";
+import { BottomSheetFlashList, BottomSheetModal } from "@gorhom/bottom-sheet";
 import { View, Text } from "react-native";
-import { Comment } from "@/types/type";
+import { Comment, Post } from "@/types/type";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import CommentInput from "./CommentInput";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import Comments from "./Comments";
+import useGetFeedComments from "@/hooks/useGetFeedComments";
+import usePostStore from "@/store/usePostStore";
+import Loading from "./Loading";
+import useFetchFeedById from "@/hooks/useFetchFeedById";
 
 type Ref = BottomSheetModal;
 interface CommentProps {
-  comments: Comment[];
+  posts: Post;
 }
 
 const CommentBottomSheet = forwardRef<Ref, CommentProps>((props, ref) => {
-  const snapPoints = useMemo(() => ["50%", "70%"], []);
-
-  const sheetRef = useRef<BottomSheet>(null);
-  //   const handleSnapPress = useCallback((index: number) => {
-  //     sheetRef.current?.snapToIndex(index);
-  //   }, []);
-
-  const data = useMemo(
-    () =>
-      Array(50)
-        .fill(0)
-        .map((_, index) => `index-${index}`),
-    []
-  );
-
-  const renderItem = useCallback(({ item }: { item: string }) => {
-    return (
-      <View key={item}>
-        <Text>{item}</Text>
-      </View>
-    );
-  }, []);
+  const snapPoints = useMemo(() => ["50%", "55%"], []);
+  const { top } = useSafeAreaInsets();
 
   return (
     <BottomSheetModal
@@ -43,13 +27,27 @@ const CommentBottomSheet = forwardRef<Ref, CommentProps>((props, ref) => {
       snapPoints={snapPoints}
       enableDynamicSizing={false}
     >
-      <View className="bg-primary-dark flex-1">
+      <View className="bg-primary-dark flex-1 border-t-[40px]">
+        <View className="justify-center items-center">
+          <Text
+            style={{ fontSize: hp(2) }}
+            className="text-white font-interSemiBold"
+          >
+            Kommentarer
+          </Text>
+        </View>
         <BottomSheetFlashList
-          data={data}
-          keyExtractor={(item) => item}
-          renderItem={renderItem}
+          data={props.posts.comments}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <Comments item={item} />}
           estimatedItemSize={43.3}
         />
+        <View
+          style={{ paddingVertical: top / 2 }}
+          className="flex-row items-center w-full"
+        >
+          <CommentInput postId={props.posts.id} />
+        </View>
       </View>
     </BottomSheetModal>
   );

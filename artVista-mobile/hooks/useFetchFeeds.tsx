@@ -29,7 +29,7 @@ const useFetchFeeds = () => {
       }
     };
     fetchPosts();
-  }, []);
+  }, [setPosts]);
 
   return { isLoading, posts };
 };

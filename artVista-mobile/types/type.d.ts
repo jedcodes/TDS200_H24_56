@@ -15,10 +15,13 @@ export type ProfileStoreState = {
 
 export type PostStoreState = {
   posts: Post[];
-  createPost: (post: Post) => void;
-  deletePost: (postId: string) => void;
+  comments: Comment[];
+  addPost: (post: Post) => void;
   setPosts: (posts: Post[]) => void;
   addComment: (postId: string, comment: Comment) => void;
+  setComments: (comments: Comment[]) => void;
+  deletePost: (postId: string) => void;
+  deleteComment: (commentId: string) => void;
 };
 
 export type FeedStoreState = {
@@ -94,12 +97,12 @@ declare interface Post {
 declare interface Comment {
   id: string;
   artistId: string;
-  artistName: string;
+  postId: string;
   comment: string;
   createAt: number;
 }
 
-declare interface CommentObject {
+declare interface CommentsObject {
   id: string;
   comment: Comment;
 }
