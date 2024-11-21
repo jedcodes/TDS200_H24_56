@@ -35,7 +35,7 @@ const CustomTextInput = ({
           placeholderTextColor={"gray"}
           autoCapitalize="none"
           style={{ fontSize: hp(2) }}
-          className={`flex-1 font-interSemiBold text-neutral-700 ${inputStyle}`}
+          className={`flex-1 font-interSemiBold text-neutral-300 ${inputStyle}`}
           secureTextEntry={secureTextEntry}
           {...props}
         />

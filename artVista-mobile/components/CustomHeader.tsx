@@ -9,7 +9,9 @@ const CustomHeader = ({ title }: { title: string }) => {
   const { artist } = useFetchArtist();
   return (
     <View className="w-full items-center justify-between flex-row">
-      <Text className="font-interBold text-3xl tracking-widest">{title}</Text>
+      <Text className="font-interBold text-3xl tracking-widest text-secondary">
+        {title}
+      </Text>
       <View className="flex-row gap-2">
         <Pressable onPress={() => router.push("./(tabs)/profile")}>
           <CustomAvatar

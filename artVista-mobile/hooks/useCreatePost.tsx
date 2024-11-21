@@ -11,15 +11,18 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import useFeedStore from "@/store/useFeedStore";
 import { useAuth } from "@/context/authContext";
 import * as Location from "expo-location";
 import { Toast } from "toastify-react-native";
+import usePickImage from "./usePickImage";
+import usePostField from "@/store/usePostField";
 
 const useCreatePost = () => {
   const { artist } = useAuth();
+  const { URL } = usePickImage();
+
+  const { imageUrl } = usePostField();
   const addPost = usePostStore((state) => state.addPost);
-  const { imageUrl, title, description, category, hashtags } = useFeedStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [location, setLocation] =
     useState<Location.LocationGeocodedAddress | null>(null);
@@ -43,12 +46,17 @@ const useCreatePost = () => {
     getCurrentLoaction();
   }, []);
 
-  const handleCreatePost = async () => {
+  const handleCreatePost = async (
+    title: string,
+    description: string,
+    category: string,
+    hashtags: string
+  ) => {
     setIsLoading(true);
 
     const response = await fetch(imageUrl!);
     const blob = await response.blob();
-
+    console.log(imageUrl, title, description, category, hashtags);
     try {
       const storageRef = ref(storage, "posts/" + new Date().toISOString());
 

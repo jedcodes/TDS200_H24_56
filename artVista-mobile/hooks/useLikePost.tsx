@@ -34,6 +34,7 @@ const useLikePost = (post: Post) => {
       isLiked ? setLikes(likes - 1) : setLikes(likes + 1);
     } catch (error) {
       Toast.error("Failed to like post");
+      console.log("Liked post error: ", error);
     }
   };
 

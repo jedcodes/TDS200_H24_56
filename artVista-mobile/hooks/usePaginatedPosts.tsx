@@ -2,9 +2,7 @@ import { db } from "@/lib/firebase";
 import { Post } from "@/types/type";
 import {
   collection,
-  doc,
   DocumentData,
-  getDoc,
   getDocs,
   limit,
   orderBy,

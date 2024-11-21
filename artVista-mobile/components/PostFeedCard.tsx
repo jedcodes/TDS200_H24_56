@@ -13,7 +13,7 @@ import useLikePost from "@/hooks/useLikePost";
 
 const PostFeedCard = ({ post }: { post: Post }) => {
   const { artistProfile } = useGetArtistById(post?.artistId!);
-  const { isLiked, likePost, likes } = useLikePost(post);
+  // const { isLiked, likePost, likes } = useLikePost(post);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const handlePresentModalPress = useCallback(() => {
@@ -21,7 +21,7 @@ const PostFeedCard = ({ post }: { post: Post }) => {
   }, []);
 
   const toggleLike = async () => {
-    await likePost();
+    //   await likePost();
   };
 
   return (
@@ -35,15 +35,16 @@ const PostFeedCard = ({ post }: { post: Post }) => {
             imageUrl={artistProfile?.photoURL}
           />
           <View className="gap-2 flex flex-col">
-            <Text className="text-lg font-interSemiBold">
-              {artistProfile?.username}
-            </Text>
-            <Text>{post?.location.region}</Text>
+            <Pressable>
+              <Text className="text-white text-2xl font-interSemiBold">
+                {artistProfile?.username}
+              </Text>
+            </Pressable>
           </View>
         </View>
       </View>
       {/** Body */}
-      <View className="gap-10">
+      <View className="gap-2">
         <View className="ml-5">
           <Text className="font-interRegular">{post?.description}</Text>
         </View>
@@ -66,16 +67,16 @@ const PostFeedCard = ({ post }: { post: Post }) => {
       {/** Footer */}
       <View className="flex flex-row gap-15">
         <View className="flex flex-row items-center">
-          <Pressable onPress={toggleLike}>
-            <Icon name="favourite" color={isLiked ? "red" : "black"} />
+          <Pressable>
+            <Icon name="favourite" color={"white"} fontSize={26} />
           </Pressable>
-          <Text>{likes}</Text>
+          <Text className="text-white">{post.likes.length}</Text>
         </View>
-        <View className="flex flex-row items-center">
+        <View className="flex flex-row items-center ml-2">
           <Pressable onPress={handlePresentModalPress}>
-            <Icon name="chat" />
+            <Icon name="chat" color={"white"} fontSize={26} />
           </Pressable>
-          <Text>{post?.comments.length}</Text>
+          <Text className="text-white">{post?.comments.length}</Text>
         </View>
       </View>
       <CommentBottomSheet ref={bottomSheetModalRef} posts={post} />
@@ -85,20 +86,11 @@ const PostFeedCard = ({ post }: { post: Post }) => {
 
 const styles = StyleSheet.create({
   container: {
-    gap: 10,
     marginBottom: 15,
-    borderRadius: 15,
-    borderCurve: "continuous",
-    padding: 10,
-    borderWidth: 0.8,
-    shadowColor: "#000",
-    backgroundColor: "#FCFCFC",
-    paddingVertical: 12,
   },
   media: {
-    height: heightPercentageToDP(40),
+    height: heightPercentageToDP(50),
     width: "100%",
-    borderRadius: 15,
     borderCurve: "continuous",
   },
 });

@@ -9,6 +9,7 @@ import CustomButton from "@/components/CustomButton";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import CustomScrollView from "@/components/CustomScrollView";
+import SocialAuthProvider from "@/components/SocialAuthProvider";
 
 const SignInScreen = () => {
   const router = useRouter();
@@ -48,7 +49,7 @@ const SignInScreen = () => {
         </Text>
         <Text
           style={{ fontSize: hp(3) }}
-          className="font-interSemiBold tracking-wider text-neutral-600"
+          className="font-interSemiBold tracking-wider text-white"
         >
           Welcome Back
         </Text>
@@ -83,11 +84,12 @@ const SignInScreen = () => {
         className="mt-5"
       />
       <View className="w-full flex flex-row justify-center items-center mb-5">
-        <Link href="/(auth)/sign-up">
+        <Link href="/(auth)/sign-up" className="text-white">
           Dont already have an account?
           <Text className="text-secondary">Register</Text>
         </Link>
       </View>
+      <SocialAuthProvider />
     </CustomScrollView>
   );
 };

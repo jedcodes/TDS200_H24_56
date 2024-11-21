@@ -1,10 +1,19 @@
 import { PressableProps, TextInputProps } from "react-native";
 import { LocationObjectCoords } from "expo-location";
+import { User } from "firebase/auth";
 
 export type ScreenContainerProps = {
   children: ReactNode;
   bgColor?: string;
 };
+
+export interface AuthContextType {
+  artist: null | User;
+  isAuthenticated: boolean;
+  loading: boolean;
+  setUser: (user: User) => void;
+  signout: () => void;
+}
 
 export type ProfileStoreState = {
   profilePosts: Post[];
@@ -26,18 +35,10 @@ export interface PostStoreState {
 
 export type FeedStoreState = {
   imageUrl: string | null;
-  description: string;
-  category: string;
-  hashtags: string;
-  title: string;
 };
 
 export type FeedStoreAction = {
   updateImageUrl: (imageUrl: State["imageUrl"]) => void;
-  updateDescription: (description: State["description"]) => void;
-  updateCategory: (category: State["category"]) => void;
-  updateHashtags: (hashtags: State["hashtags"]) => void;
-  updateTitle: (title: State["title"]) => void;
 };
 
 declare interface ButtonProps extends PressableProps {
@@ -66,17 +67,14 @@ declare interface InputInputFieldProps extends TextInputProps {
 
 declare interface Artist {
   id: string;
-  displayName?: string;
-  photoURL?: string;
-  email?: string;
-  username?: string;
-  location: string;
-  phone: string;
-  posts?: string[];
+  displayName: string;
+  username: string;
+  photoURL: string;
+  email: string;
+  posts: string[];
   favorites?: string[];
   followers?: string[];
   following?: string[];
-  bio?: string;
   createAt: number;
 }
 

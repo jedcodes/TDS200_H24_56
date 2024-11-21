@@ -15,7 +15,7 @@ export default function Index() {
     <View className="flex-1 justify-end bg-black">
       <StatusBar barStyle={"light-content"} />
       <Image
-        source={require("@/assets/images/welcome1.png")}
+        source={require("@/assets/images/welcome2.png")}
         className="absolute w-full h-full"
       />
       <LinearGradient
@@ -24,10 +24,10 @@ export default function Index() {
           height: hp(70),
         }}
         colors={[
-          "rgba(255,255,255,0)",
-          "rgba(255,255,255,0.5)",
-          "#fff",
-          "#fff",
+          "rgba(12, 12, 12,0)",
+          "rgba(12, 12, 12,0.5)",
+          "#0C0C0C",
+          "#0C0C0C",
         ]}
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 0.8 }}
@@ -40,12 +40,12 @@ export default function Index() {
         >
           <Text
             style={{ fontSize: hp(5) }}
-            className=" font-interExtraBold tracking-wider"
+            className=" font-interExtraBold tracking-wider text-white"
           >
             ArtVista
           </Text>
           <View>
-            <Text className="text-left  text-xl">
+            <Text className="text-left text-xl text-white">
               Follow your favorite artists, and view their latest art piece or
               connect to new artists and share art piece with your friends.
             </Text>

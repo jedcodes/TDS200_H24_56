@@ -1,5 +1,5 @@
 import { View, Text, StatusBar } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Link, useRouter } from "expo-router";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
@@ -8,6 +8,7 @@ import useSignup from "@/hooks/useSignup";
 import CustomTextInput from "@/components/CustomTextInput";
 import CustomScrollView from "@/components/CustomScrollView";
 import ToastManager, { Toast } from "toastify-react-native";
+import SocialAuthProvider from "@/components/SocialAuthProvider";
 
 const SignUpScreen = () => {
   const router = useRouter();
@@ -47,7 +48,7 @@ const SignUpScreen = () => {
         >
           ArtVista
         </Text>
-        <Text className="font-interMedium text-lg text-primary-dark tracking-wider ">
+        <Text className="font-interMedium text-lg text-white tracking-wider ">
           Sign up and explore the world of art
         </Text>
       </View>
@@ -81,10 +82,11 @@ const SignUpScreen = () => {
       </View>
       <View className="w-full flex flex-row justify-center items-center mb-5">
         <Link href="/(auth)/sign-in" className="text-white">
-          Har du en bruker fra før?
-          <Text className="ml-2 text-secondary">Log inn</Text>
+          Already have an account?
+          <Text className="ml-2 text-secondary">Sign in</Text>
         </Link>
       </View>
+      <SocialAuthProvider />
     </CustomScrollView>
   );
 };

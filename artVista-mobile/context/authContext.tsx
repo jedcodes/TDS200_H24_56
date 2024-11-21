@@ -1,4 +1,5 @@
 import { auth } from "@/lib/firebase";
+import { AuthContextType } from "@/types/type";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import {
   createContext,
@@ -7,14 +8,6 @@ import {
   useEffect,
   useState,
 } from "react";
-
-type AuthContextType = {
-  artist: null | User;
-  isAuthenticated: boolean;
-  loading: boolean;
-  setUser: (user: User) => void;
-  signout: () => void;
-};
 
 const AuthContext = createContext<AuthContextType>({
   artist: null,
@@ -44,7 +37,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     // Rydder opp etter seg funksjonen
     return () => unsubscribe();
-  }, []);
+  }, [artist]);
 
   const setUser = (user: User) => {
     setArtist(user);

@@ -6,10 +6,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CommentInput from "./CommentInput";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import Comments from "./Comments";
-import useGetFeedComments from "@/hooks/useGetFeedComments";
-import usePostStore from "@/store/usePostStore";
-import Loading from "./Loading";
-import useFetchFeedById from "@/hooks/useFetchFeedById";
 
 type Ref = BottomSheetModal;
 interface CommentProps {
@@ -27,13 +23,13 @@ const CommentBottomSheet = forwardRef<Ref, CommentProps>((props, ref) => {
       snapPoints={snapPoints}
       enableDynamicSizing={false}
     >
-      <View className="bg-primary-dark flex-1 border-t-[40px]">
+      <View className="bg-primary flex-1 border-t-[40px]">
         <View className="justify-center items-center">
           <Text
             style={{ fontSize: hp(2) }}
             className="text-white font-interSemiBold"
           >
-            Kommentarer
+            Comments
           </Text>
         </View>
         <BottomSheetFlashList

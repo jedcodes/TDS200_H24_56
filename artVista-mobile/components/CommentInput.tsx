@@ -20,8 +20,8 @@ const CommentInput = ({ postId }: { postId: string }) => {
   const { postComment, isLoading } = useAddComment();
   const [comment, setComment] = React.useState<string>("");
 
-  const handlePostComment = () => {
-    postComment(postId, comment);
+  const handlePostComment = async () => {
+    await postComment(postId, comment);
     setComment("");
   };
   return (
@@ -32,19 +32,21 @@ const CommentInput = ({ postId }: { postId: string }) => {
       <View className="flex-row items-center  w-full justify-start px-4 gap-x-2">
         <CustomAvatar size="sm" showIcon={false} imageUrl={artist?.photoURL} />
         <View
-          style={{ height: hp(4), borderCurve: "continuous" }}
-          className="flex-row items-center flex-1 gap-4 rounded-full bg-primary px-2 justify-between"
+          style={{ height: hp(5), borderCurve: "continuous" }}
+          className="flex-row items-center flex-1 gap-4 rounded-full bg-primary-gary px-4 justify-between"
         >
           <BottomSheetTextInput
             placeholder="Legg til en kommentar..."
+            placeholderTextColor={"gray"}
             onChangeText={(text) => setComment(text)}
             value={comment}
+            style={{ color: "gray" }}
           />
           {isLoading ? (
             <ActivityIndicator size="small" color="black" />
           ) : (
             <Pressable onPress={handlePostComment}>
-              <Icon name="send" color="black" />
+              <Icon name="send" color="gray" />
             </Pressable>
           )}
         </View>

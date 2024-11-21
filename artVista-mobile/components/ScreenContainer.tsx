@@ -11,7 +11,6 @@ const ScreenContainer = ({ children, bgColor }: ScreenContainerProps) => {
       style={{
         flex: 1,
         paddingTop: top,
-        paddingHorizontal: 12,
       }}
       className={`${bgColor}`}
     >
