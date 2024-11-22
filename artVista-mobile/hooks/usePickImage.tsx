@@ -1,5 +1,6 @@
 import useImageStore from "@/store/useImageStore";
 import * as ImagePicker from "expo-image-picker";
+import { useState } from "react";
 
 const usePickImage = () => {
   const { updateImageUrl } = useImageStore();
@@ -17,7 +18,7 @@ const usePickImage = () => {
     }
   };
 
-  return { pickImage, URL };
+  return { pickImage };
 };
 
 export default usePickImage;

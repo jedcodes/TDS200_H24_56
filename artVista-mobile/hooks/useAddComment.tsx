@@ -24,7 +24,6 @@ const useAddComment = () => {
     };
     try {
       // Her lager vi en ny kolleksjon i databasen og legger til en ny kommentar, og vi lager id til kommentaren i posts kolleksjonen. På denne måten kan vi hente kommentarene til en post via id.
-      // const commentRef = await addDoc(collection(db, "comments"), newComment);
       await updateDoc(doc(db, "posts", postId), {
         comments: arrayUnion(newComment),
       });

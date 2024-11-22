@@ -22,7 +22,7 @@ const ProfileScreen = () => {
   const { artist, isLoading } = useFetchArtist();
   const { getProfilePosts } = useFetchProfilePosts();
   const { profilePosts } = useProfileStore();
-  const [canEdit, setCanEdit] = useState(true);
+  const [canEdit, setCanEdit] = useState(false);
 
   useEffect(() => {
     if (artist) {
@@ -42,11 +42,11 @@ const ProfileScreen = () => {
   return (
     <View className="bg-primary flex-1">
       <MasonryFlashList
-        ListHeaderComponent={() => <ProfileHeader canEdit={canEdit} />}
+        ListHeaderComponent={() => <ProfileHeader canEdit={false} />}
         data={profilePosts}
         numColumns={2}
         renderItem={({ item }) => (
-          <PostGridList post={item} canDelete={canEdit} />
+          <PostGridList showDelete={true} post={item} />
         )}
         estimatedItemSize={200}
       />

@@ -1,3 +1,5 @@
+// Deene filen holder på alle Typescript types som blir brukt i projektet. Disse typene blir brukt for å definere typer for funksjoner, objekter, og variabler. Dette gjør det enklere å forstå koden og reduserer sjansen for feil.
+
 import { PressableProps, TextInputProps } from "react-native";
 import { LocationObjectCoords } from "expo-location";
 import { User } from "firebase/auth";
@@ -26,21 +28,22 @@ export type ProfileStoreState = {
 export interface PostStoreState {
   posts: Post[];
   comments: Comment[];
+}
+
+export interface PostStoreAction {
   addPost: (post: Post) => void;
   setPosts: (posts: Post[]) => void;
   addComment: (postId: string, comment: Comment) => void;
-  setComments: (comments: Comment[]) => void;
   deletePost: (postId: string) => void;
-  deleteComment: (commentId: string) => void;
 }
 
-// export type FeedStoreState = {
-//   imageUrl: string | null;
-// };
+export type FeedStoreState = {
+  imageUrl: string | null;
+};
 
-// export type FeedStoreAction = {
-//   updateImageUrl: (imageUrl: State["imageUrl"]) => void;
-// };
+export type FeedStoreAction = {
+  updateImageUrl: (imageUrl: State["imageUrl"]) => void;
+};
 
 export type ImageStoreState = {
   imageUrl: string | null;

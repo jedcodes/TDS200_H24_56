@@ -7,22 +7,22 @@ import useDeletePost from "@/hooks/useDeletePost";
 
 const PostGridList = ({
   post,
-  canDelete,
+  showDelete,
 }: {
   post: Post;
-  canDelete?: boolean;
+  showDelete: boolean;
 }) => {
   const { onDeletePost } = useDeletePost();
 
   if (!post) return null;
 
   const handleDelete = async () => {
-    await onDeletePost(post.id!);
+    await onDeletePost(post.id!, post.artistId!);
   };
   return (
     <View style={styles.container} className="mt-5">
       <Image source={post.imageUrl} style={styles.image} transition={100} />
-      {canDelete && (
+      {showDelete && (
         <Pressable onPress={handleDelete} style={styles.icon}>
           <Icon name="delete" color={"#FF204E"} />
         </Pressable>

@@ -24,7 +24,7 @@ const NewPostScreen = () => {
     }
   }, [isAuthenticated]);
 
-  const { URL, pickImage } = usePickImage();
+  const { pickImage } = usePickImage();
   const router = useRouter();
   const { imageUrl } = useImageStore();
   const { handleCreatePost, isLoading } = useCreatePost();
@@ -76,7 +76,7 @@ const NewPostScreen = () => {
           <View className="mt-5">
             {imageUrl ? (
               <Image
-                source={URL}
+                source={imageUrl}
                 style={{ width: 100, height: 100, borderRadius: 6 }}
               />
             ) : (

@@ -1,5 +1,5 @@
 import { db, storage } from "@/lib/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import useFetchArtist from "./useFetchArtist";
 import { Artist } from "@/types/type";

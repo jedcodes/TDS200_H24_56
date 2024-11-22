@@ -1,12 +1,13 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import ScreenContainer from "@/components/ScreenContainer";
 import CustomTextInput from "@/components/CustomTextInput";
-import useSearchArtist from "@/hooks/useSearchArtist";
 import useDebounce from "@/hooks/useDebounce";
-import ArtistSearchCard from "@/components/ArtistSearchCard";
 import { useRouter } from "expo-router";
 import { useAuth } from "@/context/authContext";
+import useSearch from "@/hooks/useSearch";
+import { FlashList } from "@shopify/flash-list";
+import PostGridList from "@/components/PostGridList";
 
 const search = () => {
   const { isAuthenticated } = useAuth();
@@ -18,12 +19,13 @@ const search = () => {
     }
   }, [isAuthenticated]);
   const [search, setSearch] = useState("");
-  const { isLoading, searchResults, searchArtist } = useSearchArtist();
+  // const { isLoading, searchResults, searchArtist } = useSearchArtist();
   const debouncedSearch = useDebounce(search, 500);
+  const { searchResults, searchPost } = useSearch();
 
   useEffect(() => {
     if (debouncedSearch) {
-      searchArtist(debouncedSearch);
+      searchPost(debouncedSearch);
     }
   }, [debouncedSearch]);
 
@@ -31,11 +33,17 @@ const search = () => {
     <ScreenContainer containerrStyle="px-4">
       <View className="flex-1 gap-10">
         <CustomTextInput
-          placeholder="Search for artist"
+          placeholder="Search post title, category"
           onChangeText={(text) => setSearch(text)}
         />
 
-        <ArtistSearchCard artist={searchResults!} />
+        <FlashList
+          estimatedItemSize={200}
+          data={searchResults}
+          renderItem={({ item }) => (
+            <PostGridList showDelete={false} post={item} />
+          )}
+        />
       </View>
     </ScreenContainer>
   );

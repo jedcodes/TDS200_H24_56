@@ -24,6 +24,8 @@ const useCreatePost = () => {
     useState<Location.LocationGeocodedAddress | null>(null);
   const coordinatesData = useRef<Location.LocationObjectCoords | null>(null);
 
+  //Denne useEffecten har en funksjon som henter lokasjonen til brukeren og lagrer den i coordinatesData.current.
+  // Vi henter også adressen til brukeren og lagrer den i location.
   useEffect(() => {
     const getCurrentLoaction = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -52,15 +54,15 @@ const useCreatePost = () => {
 
     const response = await fetch(imageUrl!);
     const blob = await response.blob();
-    console.log(imageUrl, title, description, category, hashtags);
+
     try {
       const storageRef = ref(storage, "posts/" + new Date().toISOString());
-
       const artistDocRef = doc(db, "artists", artist?.uid!);
 
       await uploadBytesResumable(storageRef, blob);
       const url = await getDownloadURL(storageRef);
 
+      // Oppretter et nytt postobjekt som skal lager i databasen.
       const newPost: Post = {
         title,
         description,
@@ -76,6 +78,7 @@ const useCreatePost = () => {
 
       const postDocRef = await addDoc(collection(db, "posts"), newPost);
       await updateDoc(artistDocRef, { posts: arrayUnion(postDocRef.id) });
+      //Her jeg bruker postRef som id for alle innleggere som er lagret i databasen.
       addPost({ ...newPost, id: postDocRef.id });
       Toast.success("Post created successfully");
     } catch (error) {
