@@ -29,7 +29,7 @@ const usePostStore = create<PostStoreState & PostStoreAction>((set) => ({
       }),
     })),
   // Denne funksjonen sletter en post. Så for hver gang en post blir slettet, blir den fjernet fra posts arrayet. Og dette skjer ved at funksjonen deletePost blir kalt, og tar alle postene som er lagret i posts arrayet og filtrerer ut posten som skal slettes.
-  deletePost: (postId) =>
+  deletePost: (postId: string) =>
     set((state) => ({
       posts: state.posts.filter((post) => post.id !== postId),
     })),

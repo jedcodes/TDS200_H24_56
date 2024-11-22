@@ -78,6 +78,7 @@ const PostFeedCard = ({ post }: { post: Post }) => {
           <Pressable onPress={handleToggleLikes}>
             <Icon
               name="favourite"
+              fill={post.likes.includes(artist?.uid!) ? "red" : "transparent"}
               color={post.likes.includes(artist?.uid!) ? "red" : "white"}
               fontSize={28}
             />

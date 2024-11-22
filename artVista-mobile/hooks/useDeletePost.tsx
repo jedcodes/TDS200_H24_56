@@ -1,12 +1,12 @@
 import { useState } from "react";
-import usePostStore from "@/store/usePostStore";
 import { Toast } from "toastify-react-native";
 import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import useProfileStore from "@/store/useProfileStore";
 
 const useDeletePost = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { deletePost } = usePostStore();
+  const { deletePost } = useProfileStore();
 
   const onDeletePost = async (id: string, ArtistId: string) => {
     setIsLoading(true);

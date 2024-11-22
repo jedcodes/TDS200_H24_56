@@ -4,6 +4,7 @@ import ScreenContainer from "@/components/ScreenContainer";
 import { FlashList } from "@shopify/flash-list";
 import { useAuth } from "@/context/authContext";
 import { useRouter } from "expo-router";
+import PostGridList from "@/components/PostGridList";
 
 const SavedScreen = () => {
   const { isAuthenticated } = useAuth();
@@ -18,9 +19,10 @@ const SavedScreen = () => {
   return (
     <ScreenContainer bgColor="bg-primary">
       <FlashList
-        ListHeaderComponent={() => <View className=""></View>}
         data={data}
-        renderItem={(item) => <Text>Hello</Text>}
+        renderItem={({ item }) => (
+          <PostGridList showDelete={false} post={item} />
+        )}
         estimatedItemSize={200}
       />
     </ScreenContainer>
