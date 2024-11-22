@@ -34,13 +34,14 @@ export interface PostStoreState {
   deleteComment: (commentId: string) => void;
 }
 
-export type FeedStoreState = {
-  imageUrl: string | null;
-};
+// export type FeedStoreState = {
+//   imageUrl: string | null;
+// };
 
-export type FeedStoreAction = {
-  updateImageUrl: (imageUrl: State["imageUrl"]) => void;
-};
+// export type FeedStoreAction = {
+//   updateImageUrl: (imageUrl: State["imageUrl"]) => void;
+// };
+
 export type ImageStoreState = {
   imageUrl: string | null;
 };

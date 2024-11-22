@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import usePostStore from "@/store/usePostStore";
 import { Post } from "@/types/type";
 import { useEffect, useRef, useState } from "react";
@@ -18,7 +17,6 @@ import useImageStore from "@/store/useImageStore";
 
 const useCreatePost = () => {
   const { artist } = useAuth();
-
   const { imageUrl } = useImageStore();
   const addPost = usePostStore((state) => state.addPost);
   const [isLoading, setIsLoading] = useState<boolean>(false);
