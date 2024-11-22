@@ -3,6 +3,7 @@ import React from "react";
 import { Post } from "@/types/type";
 import { Image } from "expo-image";
 import Icon from "@/assets/icons";
+import useDeletePost from "@/hooks/useDeletePost";
 
 const PostGridList = ({
   post,
@@ -11,11 +12,18 @@ const PostGridList = ({
   post: Post;
   canDelete?: boolean;
 }) => {
+  const { onDeletePost } = useDeletePost();
+
+  if (!post) return null;
+
+  const handleDelete = async () => {
+    await onDeletePost(post.id!);
+  };
   return (
     <View style={styles.container} className="mt-5">
       <Image source={post.imageUrl} style={styles.image} transition={100} />
       {canDelete && (
-        <Pressable style={styles.icon}>
+        <Pressable onPress={handleDelete} style={styles.icon}>
           <Icon name="delete" color={"#FF204E"} />
         </Pressable>
       )}

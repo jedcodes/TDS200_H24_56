@@ -12,7 +12,7 @@ import CustomButton from "@/components/CustomButton";
 import "react-native-get-random-values";
 import useCreatePost from "@/hooks/useCreatePost";
 import usePickImage from "@/hooks/usePickImage";
-import usePostField from "@/store/usePostField";
+import useImageStore from "@/store/useImageStore";
 
 const NewPostScreen = () => {
   const { isAuthenticated } = useAuth();
@@ -26,7 +26,7 @@ const NewPostScreen = () => {
 
   const { URL, pickImage } = usePickImage();
   const router = useRouter();
-  const { imageUrl } = usePostField();
+  const { imageUrl } = useImageStore();
   const { handleCreatePost, isLoading } = useCreatePost();
   const [form, setForm] = useState({
     title: "",

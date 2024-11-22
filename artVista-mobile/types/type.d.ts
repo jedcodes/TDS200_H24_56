@@ -5,6 +5,7 @@ import { User } from "firebase/auth";
 export type ScreenContainerProps = {
   children: ReactNode;
   bgColor?: string;
+  containerrStyle?: string;
 };
 
 export interface AuthContextType {
@@ -40,6 +41,13 @@ export type FeedStoreState = {
 export type FeedStoreAction = {
   updateImageUrl: (imageUrl: State["imageUrl"]) => void;
 };
+export type ImageStoreState = {
+  imageUrl: string | null;
+};
+
+export type ImageStoreAction = {
+  updateImageUrl: (imageUrl: State["imageUrl"]) => void;
+};
 
 declare interface ButtonProps extends PressableProps {
   title: string;
@@ -72,14 +80,14 @@ declare interface Artist {
   photoURL: string;
   email: string;
   posts: string[];
-  favorites?: string[];
-  followers?: string[];
-  following?: string[];
+  favorites: string[];
+  followers: string[];
+  following: string[];
   createAt: number;
 }
 
 declare interface Post {
-  id: string;
+  id?: string;
   artistId: string;
   title: string;
   description: string;
@@ -93,7 +101,7 @@ declare interface Post {
 }
 
 declare interface Comment {
-  id: string;
+  id?: string;
   artistId: string;
   postId: string;
   comment: string;

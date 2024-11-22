@@ -1,10 +1,8 @@
-import usePostField from "@/store/usePostField";
+import useImageStore from "@/store/useImageStore";
 import * as ImagePicker from "expo-image-picker";
-import { useState } from "react";
 
 const usePickImage = () => {
-  const { updateImageUrl } = usePostField();
-  const [URL, setURL] = useState<string | null>(null);
+  const { updateImageUrl } = useImageStore();
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -15,7 +13,6 @@ const usePickImage = () => {
     });
 
     if (!result.canceled) {
-      setURL(result.assets[0].uri);
       updateImageUrl(result.assets[0].uri);
     }
   };

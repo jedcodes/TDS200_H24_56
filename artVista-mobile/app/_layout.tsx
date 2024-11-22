@@ -31,6 +31,7 @@ function InitialLayout() {
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       <Stack.Screen name="(camera)" options={{ headerShown: false }} />
+      <Stack.Screen name="(detail)" options={{ headerShown: false }} />
       <Stack.Screen
         name="(modal)"
         options={{ headerShown: false, presentation: "modal" }}

@@ -8,7 +8,7 @@ const CustomBackButton = ({ onPress }: { onPress: () => void }) => {
     <Pressable
       onPress={onPress}
       style={{ width: hp(5), height: hp(5) }}
-      className="rounded-2xl items-center flex justify-center border-secondary border-[2px]"
+      className="rounded-2xl items-center flex justify-center border-neutral-100 border-[2px]"
     >
       <Icon name="arrowBack" color={"#FF204E"} />
     </Pressable>

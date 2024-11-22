@@ -23,7 +23,6 @@ const HomeScreen = () => {
         estimatedItemSize={200}
         data={posts}
         contentContainerStyle={{ paddingTop: 20 }}
-        keyExtractor={(item) => item.id}
         renderItem={({ item }) => <PostFeedCard post={item} />}
         ListHeaderComponent={() => (
           <View className="my-6 space-y-6">

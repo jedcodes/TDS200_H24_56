@@ -1,29 +1,38 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text } from "react-native";
+import React, { useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
-import useFetchFeedById from "@/hooks/useFetchFeedById";
-import Loading from "@/components/Loading";
-import ScrollContainer from "@/components/CustomScrollView";
-import PostFeedCard from "@/components/PostFeedCard";
-import Icon from "@/assets/icons";
-import TextInputField from "@/components/CustomTextInput";
+import useGetArtistById from "@/hooks/useGetArtistById";
+import useFetchProfilePosts from "@/hooks/useFetchProfilePosts";
+import useProfileStore from "@/store/useProfileStore";
+import { MasonryFlashList } from "@shopify/flash-list";
+import ProfileHeader from "@/components/ProfileHeader";
+import PostGridList from "@/components/PostGridList";
 
-const PostDetailScreen = () => {
+const ProfileModal = () => {
   const { id } = useLocalSearchParams();
-  const { post, isLoading } = useFetchFeedById(id as string);
+  const { artistProfile } = useGetArtistById(id as string);
+  const { getProfilePosts } = useFetchProfilePosts();
+  const { profilePosts } = useProfileStore();
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    if (artistProfile) {
+      getProfilePosts(artistProfile.id);
+    }
+  }, []);
 
-  console.log(post);
   return (
-    <ScrollContainer>
-      <PostFeedCard hasShadow={false} post={post} />
-      <View className="flex-row items-center gap-10">
-        <TextInputField placeholder="Type comment..." />
-      </View>
-    </ScrollContainer>
+    <View className="bg-primary flex-1">
+      <MasonryFlashList
+        ListHeaderComponent={() => <ProfileHeader canEdit={false} />}
+        data={profilePosts}
+        numColumns={2}
+        renderItem={({ item }) => (
+          <PostGridList post={item} canDelete={false} />
+        )}
+        estimatedItemSize={200}
+      />
+    </View>
   );
 };
 
-export default PostDetailScreen;
+export default ProfileModal;

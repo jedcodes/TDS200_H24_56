@@ -18,6 +18,8 @@ import Navigation03Icon from "./Send";
 import Logout01Icon from "./Logout";
 import PencilEdit02Icon from "./Edit";
 import Delete02Icon from "./Delete";
+import Location08Icon from "./Location";
+import Cancel01Icon from "./Close";
 
 const icons = {
   user: UserCircleIcon,
@@ -39,6 +41,8 @@ const icons = {
   logout: Logout01Icon,
   edit: PencilEdit02Icon,
   delete: Delete02Icon,
+  location: Location08Icon,
+  close: Cancel01Icon,
 };
 
 type IconProps = {

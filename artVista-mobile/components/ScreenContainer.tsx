@@ -3,7 +3,10 @@ import React from "react";
 import { ScreenContainerProps } from "@/types/type";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const ScreenContainer = ({ children, bgColor }: ScreenContainerProps) => {
+const ScreenContainer = ({
+  children,
+  containerrStyle,
+}: ScreenContainerProps) => {
   // useSafeAreaInsets hjelper oss med å holde innholdet unna statuslinjen
   const { top } = useSafeAreaInsets();
   return (
@@ -12,7 +15,7 @@ const ScreenContainer = ({ children, bgColor }: ScreenContainerProps) => {
         flex: 1,
         paddingTop: top,
       }}
-      className={`${bgColor}`}
+      className={`bg-primary ${containerrStyle}`}
     >
       {children}
     </View>

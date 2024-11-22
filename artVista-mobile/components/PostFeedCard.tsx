@@ -9,19 +9,27 @@ import { router } from "expo-router";
 import useGetArtistById from "@/hooks/useGetArtistById";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import CommentBottomSheet from "./CommentBottomSheet";
-import useLikePost from "@/hooks/useLikePost";
+import useToggleLikes from "@/hooks/useToggleLikes";
+import ErrorMessage from "./Error/ErrorMessage";
+import { useAuth } from "@/context/authContext";
 
 const PostFeedCard = ({ post }: { post: Post }) => {
+  // Hvis post ikke eksisterer, vis feilmelding
+  if (!post) {
+    return <ErrorMessage />;
+  }
+
   const { artistProfile } = useGetArtistById(post?.artistId!);
-  // const { isLiked, likePost, likes } = useLikePost(post);
+  const { togglePostLike } = useToggleLikes();
+  const { artist } = useAuth();
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
 
-  const toggleLike = async () => {
-    //   await likePost();
+  const handleToggleLikes = async () => {
+    await togglePostLike(post.id!, artist?.uid!);
   };
 
   return (
@@ -51,7 +59,7 @@ const PostFeedCard = ({ post }: { post: Post }) => {
         <Pressable
           onPress={() =>
             router.push({
-              pathname: "/(modal)/[id]",
+              pathname: "/(detail)/[id]",
               params: { id: post?.id! },
             })
           }
@@ -65,21 +73,25 @@ const PostFeedCard = ({ post }: { post: Post }) => {
         </Pressable>
       </View>
       {/** Footer */}
-      <View className="flex flex-row gap-15">
+      <View className="flex flex-row gap-15 mt-4">
         <View className="flex flex-row items-center">
-          <Pressable>
-            <Icon name="favourite" color={"white"} fontSize={26} />
+          <Pressable onPress={handleToggleLikes}>
+            <Icon
+              name="favourite"
+              color={post.likes.includes(artist?.uid!) ? "red" : "white"}
+              fontSize={28}
+            />
           </Pressable>
-          <Text className="text-white">{post.likes.length}</Text>
+          <Text className="text-white text-lg">{post.likes.length}</Text>
         </View>
         <View className="flex flex-row items-center ml-2">
           <Pressable onPress={handlePresentModalPress}>
-            <Icon name="chat" color={"white"} fontSize={26} />
+            <Icon name="chat" color={"white"} fontSize={28} />
           </Pressable>
-          <Text className="text-white">{post?.comments.length}</Text>
+          <Text className="text-white text-lg">{post?.comments?.length}</Text>
         </View>
       </View>
-      <CommentBottomSheet ref={bottomSheetModalRef} posts={post} />
+      <CommentBottomSheet ref={bottomSheetModalRef} posts={post!} />
     </View>
   );
 };

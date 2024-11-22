@@ -16,7 +16,7 @@ const TabIcon = ({
     <View className={`flex items-center justify-center gap-2`}>
       <Icon
         name={icon}
-        color={`${focused ? "#25C0B7" : "#FCFCFC"}`}
+        color={`${focused ? "#FF204E" : "#FCFCFC"}`}
         fontSize={26}
       />
       <Text

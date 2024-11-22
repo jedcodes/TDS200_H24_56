@@ -1,10 +1,8 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import useProfileStore from "@/store/useProfileStore";
 import { Toast } from "toastify-react-native";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import { Post } from "@/types/type";
 
 const useFetchProfilePosts = () => {

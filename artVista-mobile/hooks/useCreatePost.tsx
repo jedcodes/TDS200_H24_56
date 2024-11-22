@@ -14,14 +14,12 @@ import {
 import { useAuth } from "@/context/authContext";
 import * as Location from "expo-location";
 import { Toast } from "toastify-react-native";
-import usePickImage from "./usePickImage";
-import usePostField from "@/store/usePostField";
+import useImageStore from "@/store/useImageStore";
 
 const useCreatePost = () => {
   const { artist } = useAuth();
-  const { URL } = usePickImage();
 
-  const { imageUrl } = usePostField();
+  const { imageUrl } = useImageStore();
   const addPost = usePostStore((state) => state.addPost);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [location, setLocation] =
@@ -66,7 +64,6 @@ const useCreatePost = () => {
       const url = await getDownloadURL(storageRef);
 
       const newPost: Post = {
-        id: uuidv4(),
         title,
         description,
         category,
@@ -75,7 +72,7 @@ const useCreatePost = () => {
         comments: [],
         createdAt: Date.now(),
         artistId: artist?.uid!,
-        location: location,
+        location: coordinatesData.current,
         imageUrl: url,
       };
 

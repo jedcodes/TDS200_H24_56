@@ -16,6 +16,8 @@ const CommentBottomSheet = forwardRef<Ref, CommentProps>((props, ref) => {
   const snapPoints = useMemo(() => ["50%", "55%"], []);
   const { top } = useSafeAreaInsets();
 
+  if (!props.posts) return null;
+
   return (
     <BottomSheetModal
       index={1}
@@ -34,7 +36,6 @@ const CommentBottomSheet = forwardRef<Ref, CommentProps>((props, ref) => {
         </View>
         <BottomSheetFlashList
           data={props.posts.comments}
-          keyExtractor={(item) => item.id}
           renderItem={({ item }) => <Comments item={item} />}
           estimatedItemSize={43.3}
         />
@@ -42,7 +43,7 @@ const CommentBottomSheet = forwardRef<Ref, CommentProps>((props, ref) => {
           style={{ paddingVertical: top / 2 }}
           className="flex-row items-center w-full"
         >
-          <CommentInput postId={props.posts.id} />
+          <CommentInput postId={props.posts.id!} />
         </View>
       </View>
     </BottomSheetModal>
